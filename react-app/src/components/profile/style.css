@@ -1,0 +1,13 @@
+.rectangle {
+    display: inline-block;
+    width: 600px;
+    height: 800px;
+    background: rgb(190, 181, 181);
+  }
+
+.square {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background: rgb(190, 181, 181);
+  }
