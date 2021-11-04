@@ -1,20 +1,40 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Profile from './components/profile';
+import React, { useState, useEffect } from 'react';
+
+/*
+class App extends Component{
+  render() {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/view" element={<Gallery />} />
+        </Routes>
+      </BrowserRouter>
+    )
+  };
+}
+*/
 
 function App() {
+  const [state,setState] = useState({ID:-5})  //ID needs to be set by the login callback
+  console.log(state.ID);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/view" element={<Gallery />} />
+        <Route path="/" element={<Home userID={state.ID}/>} />
+        <Route path="/explore" element={<Explore userID={state.ID}/>} />
+        <Route path="/view" element={<Gallery userID={state.ID}/>} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-function Home() {
+
+const Home = props => {
   return (
     <div>
       <h1 style={{"text-align":"center"}}>Home Page</h1>
@@ -25,7 +45,7 @@ function Home() {
         <Link to="/view" className="view_link">View Matches!</Link>
       </div>
       <div className="profile_wrapper" style={{"text-align":"center"}}>
-        <Profile userID={-1} size={"full"}/>
+        <Profile userID={props.userID} size={"full"}/>
       </div>
     </div>
   );
@@ -34,8 +54,12 @@ function Home() {
 //We want to have a list of userID's to display and a button to iterate through them
 //Everytime the button is pressed Explore() should be called again with
 //a different userID passed to it's child component Profile
-function Explore() {
-  return (
+const Explore = props => {
+  let id = props.userID; 
+  //TODO: Populate list of userID's to display to our user
+  //TODO: Maintain additional state "index" that holds the current index 
+  //in the list of new people to show that we are currently displaying to the user
+  return (               
     <div>
       <h1 style={{"text-align":"center"}}>Explore Potential Matches!</h1>
       <div style={{"text-align":"left"}}>
@@ -52,7 +76,10 @@ function Explore() {
 //user's matches in a grid (that you can scroll through if too big)
 //Clicking on an icon in this grid should bring up that user's complete profile
 //on a separate page (could be home)
-function Gallery() {
+const Gallery = props => {
+  let id = props.userID; 
+  //TODO: Populate list of userID's to display to our user
+  //create list of <Profile> components to pass to <div className="container">
   return (
     <div>
       <h1 style={{"text-align":"center"}}>Everyone you've matched with!</h1>
