@@ -80,6 +80,20 @@ const Gallery = props => {
   let id = props.userID; 
   //TODO: Populate list of userID's to display to our user
   //create list of <Profile> components to pass to <div className="container">
+  
+  // ### STAND IN FOR API Query  (Will want to move this whole section to parent component eventually for efficiency)
+  
+  var matchesDummy = Array.from({length: 27}, () => Math.floor(Math.random() * 100000));
+  let data = [];
+  for (var i=0;i<matchesDummy.length;i++){
+    console.log(i);
+    data.push(
+      <Profile userID={matchesDummy[i]} size={"half"}/>
+    );
+  }
+  // these should eventually be passed to Gallery by App
+  const [matches, setMatches] = useState([data]);
+  // ### END API QUERY
   return (
     <div>
       <h1 style={{"text-align":"center"}}>Everyone you've matched with!</h1>
@@ -88,33 +102,7 @@ const Gallery = props => {
       </div>
       <div className="gallery_wrapper" style={{"text-align":"center"}}>
         <div className="container">
-          <Profile userID={-1} size={"half"}/>
-          <Profile userID={-2} size={"half"}/>
-          <Profile userID={-3} size={"half"}/>
-          <Profile userID={-4} size={"half"}/>
-          <Profile userID={-5} size={"half"}/>
-          <Profile userID={-6} size={"half"}/>
-          <Profile userID={-7} size={"half"}/>
-          <Profile userID={-8} size={"half"}/>
-          <Profile userID={-9} size={"half"}/>
-          <Profile userID={-1} size={"half"}/>
-          <Profile userID={-2} size={"half"}/>
-          <Profile userID={-3} size={"half"}/>
-          <Profile userID={-4} size={"half"}/>
-          <Profile userID={-5} size={"half"}/>
-          <Profile userID={-6} size={"half"}/>
-          <Profile userID={-7} size={"half"}/>
-          <Profile userID={-8} size={"half"}/>
-          <Profile userID={-9} size={"half"}/>
-          <Profile userID={-1} size={"half"}/>
-          <Profile userID={-2} size={"half"}/>
-          <Profile userID={-3} size={"half"}/>
-          <Profile userID={-4} size={"half"}/>
-          <Profile userID={-5} size={"half"}/>
-          <Profile userID={-6} size={"half"}/>
-          <Profile userID={-7} size={"half"}/>
-          <Profile userID={-8} size={"half"}/>
-          <Profile userID={-9} size={"half"}/>
+          {matches}
         </div>
       </div>
     </div>
