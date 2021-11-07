@@ -11,8 +11,8 @@ const Profile = props => {      //props should be a unique id corresponding to t
         User: props.root,
         Matches: [], 
         Potentials: []}]);
-    console.log("ROOT USER "+props.root)
     // Below promise will only be functional once backend is serving data
+    /*
     axios.get(`http://localhost:4000/api/?profile=${props.userID}`)
     .then((res) => {
         var response = res.data;
@@ -23,7 +23,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
         console.log(e);
         console.log("cannot connect to server");
     })
-
+    */
     if(props.size=="full"){
         if(props.root){
             return (
