@@ -7,7 +7,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
     const [profile, setProfile] = useState([{
         Name: "null", 
         Description: "null", 
-        UID: -1, 
+        UID: props.userID, 
         Matches: [], 
         Potentials: []}]);
 
