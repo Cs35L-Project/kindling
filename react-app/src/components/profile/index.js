@@ -8,9 +8,10 @@ const Profile = props => {      //props should be a unique id corresponding to t
         Name: "null", 
         Description: "null", 
         UID: props.userID, 
+        User: props.root,
         Matches: [], 
         Potentials: []}]);
-
+    console.log("ROOT USER "+props.root)
     // Below promise will only be functional once backend is serving data
     axios.get(`http://localhost:4000/api/?profile=${props.userID}`)
     .then((res) => {
@@ -24,14 +25,27 @@ const Profile = props => {      //props should be a unique id corresponding to t
     })
 
     if(props.size=="full"){
-        return (
-            <div className="rectangle">
-                <h1>NAME</h1>
-                <h2>PICTURE</h2>
-                <h3>DESCRIPTION</h3>
-                <h4>USER ID: {props.userID}</h4>
-            </div>
-        );
+        if(props.root){
+            return (
+                <div className="rectangle">
+                    <div style={{"text-align":"left"}}><button onClick={() => props.toggleEdit({showForm:!props.state})}>Edit</button></div>
+                    <h1>NAME</h1>
+                    <h2>PICTURE</h2>
+                    <h3>DESCRIPTION</h3>
+                    <h4>USER ID: {props.userID}</h4>
+                </div>
+            );
+        }
+        else{
+            return (
+                <div className="rectangle">
+                    <h1>NAME</h1>
+                    <h2>PICTURE</h2>
+                    <h3>DESCRIPTION</h3>
+                    <h4>USER ID: {props.userID}</h4>
+                </div>
+            );
+        }
     }
     else{
         return (

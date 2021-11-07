@@ -50,6 +50,23 @@ function View(){
   );
 }
 const Home = props => {
+  const [state,setState] = useState({showForm:false})
+  const showForm = () => {
+    return (
+      <div> 
+     <form id= "edit-profile">
+ 
+          <label>Name : </label>
+          <input type="text" />
+ 
+          <label>Interests : </label>
+          <input type="text" />
+ 
+          <button>Save</button>
+       </form>
+       </div>
+      );
+  }
   return (
     <div>
       <h1 style={{"text-align":"center"}}>Home Page</h1>
@@ -60,8 +77,9 @@ const Home = props => {
         <Link to="/view" className="view_link">View Matches!</Link>
       </div>
       <div className="profile_wrapper" style={{"text-align":"center"}}>
-        <Profile userID={props.userID} size={"full"}/>
+        <Profile userID={props.userID} size={"full"} root={true} toggleEdit={setState} state={state.showForm}/>
       </div>
+      {state.showForm ? showForm() : null}
     </div>
   );
 }
