@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom';
 import Profile from './components/profile';
 import React, { useState, useEffect } from 'react';
 
@@ -28,12 +28,26 @@ function App() {
         <Route path="/" element={<Home userID={state.ID}/>} />
         <Route path="/explore" element={<Explore userID={state.ID}/>} />
         <Route path="/view" element={<Gallery userID={state.ID}/>} />
+        <Route path="/view/:id" element={<View/>} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-
+function View(){
+  const {id} = useParams();
+  return (
+    <div>
+      <h1 style={{"text-align":"center"}}>View User {id}'s profile</h1>
+      <div style={{"text-align":"left"}}>
+        <Link to="/view" className="view_link">Back to Matches</Link>
+      </div>
+      <div className="profile_wrapper" style={{"text-align":"center"}}>
+        <Profile userID={id} size={"full"}/>
+      </div>
+    </div>
+  );
+}
 const Home = props => {
   return (
     <div>
@@ -83,12 +97,15 @@ const Gallery = props => {
   
   // ### STAND IN FOR API Query  (Will want to move this whole section to parent component eventually for efficiency)
   
-  var matchesDummy = Array.from({length: 27}, () => Math.floor(Math.random() * 100000));
+  var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
   let data = [];
   for (var i=0;i<matchesDummy.length;i++){
     console.log(i);
+    let routeString = "/view/"+matchesDummy[i].toString();
     data.push(
+      <Link to={routeString}>
       <Profile userID={matchesDummy[i]} size={"half"}/>
+      </Link>
     );
   }
   // these should eventually be passed to Gallery by App
