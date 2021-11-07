@@ -88,24 +88,33 @@ const Home = props => {
 //Everytime the button is pressed Explore() should be called again with
 //a different userID passed to it's child component Profile
 const Explore = props => {
-  const [state,setState] = useState([]);
   let id = props.userID; 
-  //TODO: Populate list of userID's to display to our user
-  //TODO: Maintain additional state "index" that holds the current index 
-  //in the list of new people to show that we are currently displaying to the user
-  let potentialsDummy = props.potentialsDummy;
-  let index =  parseInt(Math.floor(Math.random() * potentialsDummy.length))
+  const [state,setState] = useState({index:parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),toggle:false});
+  const leftSwipe = () => {
+    props.potentialsDummy.splice(state.index,1); //Delete that user from their list
+    setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
+  }
+  const rightSwipe = () => {
+    //TODO: Communicate to backend that we 'liked' this user
+    setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length))});
+  }
+  const exhaustedOptions = () => {
+    return (
+      <div className="rectangle">
+        <h1>Oh no! You've run out of people to explore. Try refreshing the page</h1>
+      </div>
+    );
+  }
   return (               
     <div>
-      <h1 style={{"text-align":"center"}}>Explore Potential Matches!</h1>
-      <div style={{"text-align":"left"}}>
+      <h1 style={{"textAlign":"center"}}>Explore Potential Matches!</h1>
+      <div style={{"textAlign":"left"}}>
         <Link to="/" className="ret">Return Home</Link>
       </div>
-      <div className="explore_profile_wrapper" style={{"text-align":"center"}}>
-        <Profile userID={potentialsDummy[index]} size={"full"}/>
-      </div>
-      <div>
-        <button onClick={setState}>Next</button>
+      <div className="explore_profile_wrapper" style={{"textAlign":"center"}}>
+        <button onClick={leftSwipe}>X</button>
+        {props.potentialsDummy.length>0 ? <Profile userID={props.potentialsDummy[state.index]} size={"full"}/> : exhaustedOptions()}
+        <button onClick={rightSwipe}>Next</button>
       </div>
     </div>
   );
