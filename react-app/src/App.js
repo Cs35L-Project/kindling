@@ -21,13 +21,14 @@ class App extends Component{
 
 function App() {
   const [state,setState] = useState({ID:-5})  //ID needs to be set by the login callback
-  console.log(state.ID);
+  var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
+  var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home userID={state.ID}/>} />
-        <Route path="/explore" element={<Explore userID={state.ID}/>} />
-        <Route path="/view" element={<Gallery userID={state.ID}/>} />
+        <Route path="/explore" element={<Explore userID={state.ID} potentialsDummy={potentialsDummy}/>} />
+        <Route path="/view" element={<Gallery userID={state.ID} matchesDummy={matchesDummy}/>} />
         <Route path="/view/:id" element={<View/>} />
       </Routes>
     </BrowserRouter>
@@ -69,10 +70,13 @@ const Home = props => {
 //Everytime the button is pressed Explore() should be called again with
 //a different userID passed to it's child component Profile
 const Explore = props => {
+  const [state,setState] = useState([]);
   let id = props.userID; 
   //TODO: Populate list of userID's to display to our user
   //TODO: Maintain additional state "index" that holds the current index 
   //in the list of new people to show that we are currently displaying to the user
+  let potentialsDummy = props.potentialsDummy;
+  let index =  parseInt(Math.floor(Math.random() * potentialsDummy.length))
   return (               
     <div>
       <h1 style={{"text-align":"center"}}>Explore Potential Matches!</h1>
@@ -80,7 +84,10 @@ const Explore = props => {
         <Link to="/" className="ret">Return Home</Link>
       </div>
       <div className="explore_profile_wrapper" style={{"text-align":"center"}}>
-        <Profile userID={-2} size={"full"}/>
+        <Profile userID={potentialsDummy[index]} size={"full"}/>
+      </div>
+      <div>
+        <button onClick={setState}>Next</button>
       </div>
     </div>
   );
@@ -96,8 +103,7 @@ const Gallery = props => {
   //create list of <Profile> components to pass to <div className="container">
   
   // ### STAND IN FOR API Query  (Will want to move this whole section to parent component eventually for efficiency)
-  
-  var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
+  let matchesDummy = props.matchesDummy;
   let data = [];
   for (var i=0;i<matchesDummy.length;i++){
     console.log(i);
