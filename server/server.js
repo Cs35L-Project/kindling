@@ -1,22 +1,16 @@
 const express = require("express");
-// const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
-
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
+app.use(cors());
 
-app.use(cors(corsOptions));
+// Parse requests of content-type - application/json
+app.use(express.json());
 
-// parse requests of content-type - application/json
-app.use(express.json());  /* bodyParser.json() is deprecated */
+// Parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));   /* bodyParser.urlencoded() is deprecated */
-
-const db = require("./app/models");
+const db = require('./app/config/db.config.js');
 
 db.sequelize.sync();
 // // drop the table if it already exists
@@ -24,15 +18,15 @@ db.sequelize.sync();
 //   console.log("Drop and re-sync db.");
 // });
 
-// simple route
+// API routes
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to our app." });
 });
 
 require("./app/routes/user.routes")(app);
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
+// Set port, listen for requests
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
