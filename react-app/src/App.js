@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom';
 import Profile from './components/profile';
 import React, { useState, useEffect } from 'react';
+import Login from './components/Login';
 
 /*
 class App extends Component{
