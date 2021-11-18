@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, Link, useParams, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom';
 import Profile from './components/profile';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
@@ -22,12 +22,13 @@ class App extends Component{
 
 function App() {
   const [state,setState] = useState({ID:-5})  //ID needs to be set by the login callback
+  // Add token for user login authentication
   const [token, setToken] = useState();
 
   if(!token) {
     return <Login setToken={setToken} />
   }
-
+  
   var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
   var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
   return (
@@ -180,7 +181,6 @@ function Users() {
       <nav>
         <Link to="me">My Profile</Link>
       </nav>
-
       <Routes>
         <Route path="/" element={<UsersIndex />} />
         <Route path=":id" element={<UserProfile />} />
