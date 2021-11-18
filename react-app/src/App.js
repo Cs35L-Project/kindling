@@ -21,6 +21,13 @@ class App extends Component{
 
 function App() {
   const [state,setState] = useState({ID:-5})  //ID needs to be set by the login callback
+  // Create token for login application
+  // Work with backend to store user login data
+  const [token, setToken] = useState();
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+    
   var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
   var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
   return (
