@@ -24,8 +24,7 @@ router.post('/Signup', async (req, res) => {
     // data will be an object with the user and it's authToken
     let data = await user.authorize();
 
-    // send back the new user and auth token to the
-    // client { user, authToken }
+    // send back the new user and auth token to the client { user, authToken }
     return res.json(data);
 
   } catch(err) {
@@ -38,8 +37,7 @@ router.post('/Signup', async (req, res) => {
 router.post('/', async (req, res) => {
   const { username, password } = req.body;
 
-  // if the username / password is missing, we use status code 400
-  // indicating a bad request was made and send back a message
+  // if the username / password is missing, use status code 400 to indicate that
   if (!username || !password) {
     return res.status(400).send(
       'Request missing username or password param'
@@ -48,7 +46,7 @@ router.post('/', async (req, res) => {
 
   try {
 
-    // we will cover the user authenticate method in the next section
+    // get the authentication token for the given username and password
     let user = await User.authenticate(username, password)
 
     return res.json(user);
