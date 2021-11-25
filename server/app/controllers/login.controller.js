@@ -10,7 +10,7 @@ const router = express.Router();
 const { User } = require('../models');
 
 // Register Route
-router.post('/register', async (req, res) => {
+router.post('/Signup', async (req, res) => {
 
   // hash the password provided by the user with bcrypt
   const hash = bcrypt.hashSync(req.body.password, 10);
@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login Route
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
   const { username, password } = req.body;
 
   // if the username / password is missing, we use status code 400
