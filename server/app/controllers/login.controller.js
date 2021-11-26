@@ -13,25 +13,27 @@ const { User } = require('../models');
 router.post('/Signup', async (req, res) => {
 
   // hash the password provided by the user with bcrypt
-  const hash = bcrypt.hashSync(req.body.password, 10);
-  const username = req.body.username;
-
-  try {
-    // create a new user with the password hash from bcrypt
-    let user = await User.create(
-      Object.assign(req.body, { password: hash })
-    );
-
-    // data will be an object with the user and it's authToken
-    let data = await user.authorize();
-
-    // send back the new user and auth token to the client { user, authToken }
-    return res.json(data);
-
-  } catch(err) {
-    return res.status(400).send(err);
-  }
-
+  const hash = bcrypt.hashSync(req.body.password, 10).then(
+    (hash) => {
+      // create a new user
+      const user = new User({
+        username: req.body.username,
+        password: hash
+      });
+      // save the user and send a message if successful
+      user.save().then(
+        () => {
+          res.status(201).json({
+            message: "Signup Successful!"
+          });
+        }
+      ).catch(
+        (error) => {
+          res.status(400).send(err);
+        }
+      );
+    }
+  );
 });
 
 // Login Route
