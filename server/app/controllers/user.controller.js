@@ -1,7 +1,7 @@
 const db = require("../config/db.config.js");
-const env = require('../config/env.js');
 const User = db.users;
 const Op = db.Sequelize.Op;
+const { fn, col } = db.Sequelize;
 
 // Create and save a new User
 exports.create = (req, res) => {
@@ -11,8 +11,11 @@ exports.create = (req, res) => {
         password: req.body.password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        profPic: req.body.profPic,
         bio: req.body.bio,
-        interests: req.body.intersts
+        interests: req.body.interests,
+        likes: req.body.likes,
+        matches: req.body.matches
     })
         .then(data => {
             res.send(data);
@@ -20,14 +23,16 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the User."
+                    err.message || "Some error occurred while creating User."
             });
         });
 };
 
 // Retrieve all Users from the database
 exports.findAll = (req, res) => {
-    User.findAll()
+    const interests = req.query.interests;
+    var condition = interests ? fn('JSON_CONTAINS', col('interests'), JSON.stringify(interests)) : null;
+    User.findAll({ where: condition })
         .then(data => {
             res.send(data);
         })
@@ -74,13 +79,13 @@ exports.update = (req, res) => {
                 });
             } else {
                 res.send({
-                    message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
+                    message: "Cannot update User with id=${id}. Maybe User was not found or req.body is empty!"
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating User with id=" + id
+                message: "Error updating User with id=" + id + "."
             });
         });
 };
