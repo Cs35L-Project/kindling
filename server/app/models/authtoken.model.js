@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       AuthToken.belongsTo(User);
     };
   
-    // create associate random 15 char token with user 
+    // create associate random 10 char token with user 
     AuthToken.generate = async function(UserId) {
       if (!UserId) {
         throw new Error('AuthToken requires a user ID')
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       const possibleCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
         'abcdefghijklmnopqrstuvwxyz0123456789';
   
-      for (var i = 0; i < 15; i++) {
+      for (var i = 0; i < 10; i++) {
         token += possibleCharacters.charAt(
           Math.floor(Math.random() * possibleCharacters.length)
         );
