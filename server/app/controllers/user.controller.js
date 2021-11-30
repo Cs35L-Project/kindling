@@ -7,8 +7,10 @@ const { fn, col } = db.Sequelize;
 
 // Create and save a new User
 exports.create = (req, res) => {
-    const hash = bcrypt.hashSync(req.body.password, 10).then(
-    (hash) => {
+    console.log("USER CREATED")
+    console.log(req.body)
+    const hash = bcrypt.hashSync(req.body.password, 10) 
+    
         // Save User in the database
         User.create({
             username: req.body.username,
@@ -27,8 +29,8 @@ exports.create = (req, res) => {
                     err.message || "Some error occurred while creating User."
             });
         });
-      }
-   );
+      
+   
 };
 
 // Retrieve all Users from the database
