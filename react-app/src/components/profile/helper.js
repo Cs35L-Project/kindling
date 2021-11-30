@@ -2,7 +2,7 @@ import axios from "axios";
 
 export function generateFeed(userID){
     var feed = []; 
-    var matchingUser = fetch("http://localhost:4000/api/users/:" + userID) //get user object using userID
+    var matchingUser = fetch("http://localhost:4000/api/users/" + userID) //get user object using userID
     .then(response => response.json())
     .then(function(data)
     {
@@ -10,7 +10,8 @@ export function generateFeed(userID){
     })
     .catch(function(error)
     {
-
+        console.log(error);
+        console.log("Could not retrieve user object using userID")
     })
 
     //contains list of all users 
@@ -18,18 +19,31 @@ export function generateFeed(userID){
     .then(response => response.json())
     .then(function(data)
     {
-        return data.slice();
+        var userArray = data.slice();
+        //shuffle the order of users in the array
+        for (let i = userArray.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+        
+            // swap elements array[i] and array[j]
+            // we use "destructuring assignment" syntax to achieve that
+            // you'll find more details about that syntax in later chapters
+            // same can be written as:
+            // let t = array[i]; array[i] = array[j]; array[j] = t
+            [userArray[i], userArray[j]] = [userArray[j], userArray[i]];
+          }
+        return userArray;
     })
     .catch(function(error)
     {
-
+        console.log(error);
+        console.log("Could not get list of all users")
     })
 
     //add mutually liked users
     var a = 0;
-    while(feed.length < 10 && a < matchingUser.likedList.length)
+    while(feed.length < 10 && a < matchingUser.likes.length)
     {
-        var currUser = fetch("http://localhost:4000/api/users/:" + matchingUser.likedList[a]) //get currUser based on userID of likedList[i]
+        var currUser = fetch("http://localhost:4000/api/users/" + matchingUser.likes[a]) //get currUser based on userID of likes[a]
         .then(response => response.json())
         .then(function(data)
         {
@@ -37,12 +51,14 @@ export function generateFeed(userID){
         })
         .catch(function(error)
         {
-    
+            console.log(error)
+            console.log("Could not get currUser based on userID of likes[a]")
         })
-        if(currUser.likedList.includes(userID))
+
+        if(currUser.likes.includes(userID))
         {            
             //add to feed
-            feed.unshift(currUserID);
+            feed.unshift(currUser.id);
         }
         a++;
     }
