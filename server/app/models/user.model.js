@@ -46,6 +46,36 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.JSON
     }
   });
+  
+ // set association
+  User.associate = function ({ authToken })
+  {
+    User.hasMany(authToken)
+  }
+
+  
+  User.auth = async function(id, password) {
+    const user = await User.findOne({where: { id }});
+
+    if (bcrypt.compareSync(password, user.id)) {
+      return user.authorize();
+    }
+    else {
+      return res.status(400).json({
+        error: new Error("Wrong password!")
+      })
+    }
+
+    User.prototype.authorize = async function ()
+    {
+      const { authToken } = sequelize.models;
+      const user = this
+      const token = await authToken.generate(this.id);
+      await user.addAuthToken(token);
+      return {user, token}
+    };
+
+  }
 
   return User;
 };
