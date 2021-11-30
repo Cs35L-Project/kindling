@@ -9,7 +9,7 @@ module.exports = app => {
   // Retrieve all Users
 
    // Login
-  router.post("/login", users.login);
+  //router.post("/login", users.login);
   
   // Retrieve all User
 
