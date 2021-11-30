@@ -54,10 +54,10 @@ module.exports = (sequelize, Sequelize) => {
   }
 
   
-  User.auth = async function(id, password) {
-    const user = await User.findOne({where: { id }});
+  User.auth = async function(username, password) {
+    const user = await User.findOne({where: { username }});
 
-    if (bcrypt.compareSync(password, user.id)) {
+    if (bcrypt.compareSync(password, user.password)) {
       return user.authorize();
     }
     else {

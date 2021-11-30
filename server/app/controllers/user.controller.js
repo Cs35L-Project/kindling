@@ -33,6 +33,27 @@ exports.create = (req, res) => {
    
 };
 
+const { u_auth } = require('../models');
+
+// User login
+exports.login = (req, res) => {
+    const { username, password } = req.body;
+    if (!username || !password) {
+    return res.status(400).send({
+        message:
+            err.message || "Missing username or password"
+    });
+  }
+    
+    let u_auth = await user.auth(username, password)
+    u_auth = await u_auth.authorize();
+    if (u_auth)
+        return res.json(u_auth);
+    else
+        return res.status(400).send(err);
+};
+
+
 // Retrieve all Users from the database
 exports.findAll = (req, res) => {
     const interests = req.query.interests;
@@ -48,6 +69,7 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
 
 // Find a single User with an id
 exports.findOne = (req, res) => {
