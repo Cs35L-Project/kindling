@@ -42,7 +42,7 @@ exports.login = (req, res) => {
     return res.status(400).send({
         message:
             err.message || "Missing username or password"
-    );
+    });
   }
     
     let u_auth = await user.auth(username, password)
