@@ -39,11 +39,11 @@ export function generateFeed(userID){
         console.log("Could not get list of all users")
     })
 
-    //add mutually liked users
+    //add users that liked matchingUsers
     var a = 0;
-    while(feed.length < 10 && a < matchingUser.likes.length)
+    while(feed.length < 10 && a < availUsers.length)
     {
-        var currUser = fetch("http://localhost:4000/api/users/" + matchingUser.likes[a]) //get currUser based on userID of likes[a]
+        var currUser = fetch("http://localhost:4000/api/users/" + availUsers[a]) //get currUser based on userID of likes[a]
         .then(response => response.json())
         .then(function(data)
         {
