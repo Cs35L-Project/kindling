@@ -1,5 +1,112 @@
-.login-wrapper {
+.main {
+    text-align: center;
+    justify-content: center;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 90px 0 90px 0;
+    background-image: linear-gradient( rgb(185, 127, 72), rgb(68, 44, 24));
+}
+.sub-main{
+    display: flex;
+    justify-content: center;
+    height: 550px;
+    width: 35%;
+    box-shadow: 11px 12px 13px 12px rgb(78, 49, 21);
+    padding-top: 30px;
+    border-radius: 60px;
+    background-color: white;
+}
+
+.signup_sub-main{
+    display: flex;
+    justify-content: center;
+    height: 900px;
+    width: 50%;
+    box-shadow: 11px 12px 13px 12px rgb(78, 49, 21);
+    padding-top: 30px;
+    border-radius: 60px;
+    background-color: white;
+}
+
+.imgs{
+    padding-top: 20px;
+    justify-content:center;
+    display:flex;
+}
+
+.container-image{
+    background-color: rgb(255, 255, 255);
+    border-radius: 200px;
+    align-items:center;
+    display:flex;
+    justify-content: center;
+    height: 115px;
+    width: 115px;
+}
+
+.kindling{
+    height: 150px;
+    width: 400px;
+    border-radius: 10px
+}
+
+.mini {
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    padding: 14px 0 0 25px;
+}
+
+.input-login {
+    width: 300px;
+    height: 50px;
+    border-radius: 60px;
+    box-shadow: inset 0px 0px 25px 0px #888;
+    padding-left: 70px;
+    font-size: 20px;
+}
+
+.input-signup {
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 10px 0px #888;
+    font-size: 15px;
+}
+
+.checkbox {
+    padding-top: 20px;
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+    justify-content: center
+}
+
+.second-input {
+    padding-top: 20px;
+}
+
+button {
+    width: 380px;
+    height: 50px;
+    border-radius: 60px;
+    background-color:rgb(139, 97, 57);
+    color: white;
+    font-size: 25px;
+    border: none;
+}
+
+.login-button {
+    padding-top: 20px;
+}
+
+.link {
+    padding-top: 20px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+a {
+    color: blue;
+}
+
+.information {
+    padding-top: 20px;
 }

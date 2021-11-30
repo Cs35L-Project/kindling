@@ -1,22 +1,23 @@
 const db = require("../config/db.config.js");
+const env = require('../config/env.js');
+const bcrypt = require('bcrypt');
 const User = db.users;
 const Op = db.Sequelize.Op;
 const { fn, col } = db.Sequelize;
 
 // Create and save a new User
 exports.create = (req, res) => {
-    // Save User in the database
-    User.create({
-        username: req.body.username,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        profPic: req.body.profPic,
-        bio: req.body.bio,
-        interests: req.body.interests,
-        likes: req.body.likes,
-        matches: req.body.matches
-    })
+    const hash = bcrypt.hashSync(req.body.password, 10).then(
+    (hash) => {
+        // Save User in the database
+        User.create({
+            username: req.body.username,
+            password: hash,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            bio: req.body.bio,
+            interests: req.body.intersts
+         })
         .then(data => {
             res.send(data);
         })
@@ -26,6 +27,8 @@ exports.create = (req, res) => {
                     err.message || "Some error occurred while creating User."
             });
         });
+      }
+   );
 };
 
 // Retrieve all Users from the database
