@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
 import './index.css';
 import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
@@ -115,18 +115,55 @@ const music = [
 ]
 
 const Signup = props => {
+    const [state, setState] = useState({
+        selectedHobbies: [],
+        selectedSports: [],
+        selectedMusic: [],
+        selectedPersonality: []
+    })
+    console.log(state);
+    let saveData = () => {
+        //const interests = state.selectedHobbies.concat(state.selectedSports,state.selectedMusic,state.selectedPersonality);
+        const interests = {
+            ...state.selectedHobbies,
+            ...state.selectedMusic,
+            ...state.selectedPersonality,
+            ...state.selectedSports
+        };
+        var request = require('request');
+
+        /*
+        request(JSON.stringify(options,getCircularReplacer()), function (error, response, body){
+            console.log(state);
+            console.log(response);
+        });*/
+        //var formData = new FormData(document.querySelector('form'))
+        //request.post({url:'http://localhost:4000/api/users', form: formData})        
+        console.log(interests);
+        request.post({url:'http://localhost:4000/api/users', 
+        form: {
+            username: state.username,
+            password: state.password,
+            firstName: state.firstName,
+            lastName: state.lastName,
+            interests: interests,
+        }
+        });
+    }
     return (
-        <form>
+        <form onSubmit={saveData}>
                 <h3>Don't Have an Account?</h3>
 
                 <div className="form-group">
                     <label>First Name</label>
-                    <input type="text" className="form-control" placeholder="Enter first name" />
+                    <input type="text" id="firstName" className="form-control" placeholder="Enter first name"
+                     onChange={(e) => setState({...state,firstName:e.target.value})}/>
                 </div>
 
                 <div className="form-group">
                     <label>Last Name</label>
-                    <input type="text" className="form-control" placeholder="Enter last name" />
+                    <input type="text" id="lastName" className="form-control" placeholder="Enter last name" 
+                     onChange={(e) => setState({...state,lastName:e.target.value})}/>
                 </div>
 
                 <div className="form-group">
@@ -140,38 +177,40 @@ const Signup = props => {
                 
                 <div className="form-group">
                     <label>Email Address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <input type="email" id="username" className="form-control" placeholder="Enter email" 
+                     onChange={(e) => setState({...state,username:e.target.value})}/>
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <input type="password" id="password" className="form-control" placeholder="Enter password" 
+                     onChange={(e) => setState({...state,password:e.target.value})}/>
                 </div>
 
                 <div className="form-group">
                     <label>What are your hobbies?</label>
                         <Creatable options={hobbies}
                             isMulti
-                            onChange={(opt, meta) => console.log(opt, meta)}
+                            onChange={(opt, meta) => setState({...state,selectedHobbies:opt})}
                         />
                     <label>What sports do you like?</label>
                         <Creatable options={sports}
                             isMulti
-                            onChange={(opt, meta) => console.log(opt, meta)}
+                            onChange={(opt, meta) => setState({...state,selectedSports:opt})}
                         />
                     <label>What music do you like?</label>
                         <Creatable options={music}
                             isMulti
-                            onChange={(opt, meta) => console.log(opt, meta)}
+                            onChange={(opt, meta) => setState({...state,selectedMusic:opt})}
                         />
                     <label>What is your personality type?</label>
                         <Creatable options={personality}
                             isMulti
-                            onChange={(opt, meta) => console.log(opt, meta)}
+                            onChange={(opt, meta) => setState({...state,selectedPersonality:opt})}
                         />
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                <button type="button" onClick={saveData} className="btn btn-primary btn-block">Sign Up</button>
                 <p className="forgot-password text-right">
                     Already registered <a href="/">Sign in?</a>
                 </p>
