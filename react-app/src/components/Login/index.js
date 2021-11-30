@@ -3,6 +3,10 @@ import Select from 'react-select';
 import './index.css';
 import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import Creatable from 'react-select/creatable';
+import kindling from "./image/kindling.png"
+import kindling_mini from "./image/kindling_mini.png"
+import lock from "./image/lock.png"
+import profile from "./image/profile-user.png"
 
 export default function Login() {
     return(
@@ -10,38 +14,52 @@ export default function Login() {
             <Routes>
                 <Route path="/" element={<LoginPage/>} />
                 <Route path="/Signup" element={<Signup/>} />
+                
             </Routes>
         </BrowserRouter> 
     );
 }
 
+/* <Route path="/Reset" element={<ResetPassword/>} /> */
+
 const LoginPage = props => {
     return (
-        <div className="login-wrapper">
-            <h1>Welcome Back! Log In</h1>
-            <form>
-                <label>
-                    <p>Username</p>
-                    <input type="text" className="form-control" placeholder="Enter username"/>
-                </label>
-                <label>
-                    <p>Password</p>
-                    <input type="password" className="form-control" placeholder="Enter password"/>
-                </label>
-                <div className="custom-control custom-checkbox">
-                    <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                    <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-                </div>
+        <div className="main">
+            <div className = "sub-main">
                 <div>
-                    <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                    <p className="forgot-password text-right">
-                        Forgot <a href="#">password?</a>
-                    </p>
-                </div>
-                <div>
-                    <Link to="/Signup" className="btn btn-primary">Signup</Link>
-                </div>
-            </form>
+                    <div className="imgs">
+                        <div className="container-image">
+                            <img src={kindling} alt="kindling" className="kindling"/>
+                        </div>
+                    </div>
+                    <div>
+                        <h1>Sign In</h1>
+                        <form>
+                            <div>
+                                <img src={profile} alt="profile" className="mini"/>
+                                <input type="text" className="input-login" placeholder="Enter username"/>
+                            </div>
+                            <div className="second-input">
+                                <img src={lock} alt="lock" className="mini"/>
+                                <input type="password" className="input-login" placeholder="Enter password"/>
+                            </div>
+                            <div className="custom-control custom-checkbox">
+                                <input type="checkbox" className="checkbox" id="customCheck1" />
+                                <label className="checkbox" htmlFor="customCheck1">Remember me</label>
+                            </div>
+                            <div className="login-button">
+                                <button type="submit">Submit</button>
+                            </div>
+                            <div className="link">
+                                No account? <Link to="/Signup">Signup</Link>
+                            </div>
+                        </form>
+                    </div>
+            
+            
+            
+            </div>
+            </div>
         </div>
     );
 }
@@ -112,73 +130,108 @@ const music = [
     { label: 'Pop', value: 'Pop'},
     { label: 'R&B/Soul', value: 'R&B/Soul'},
     { label: 'Rock', value: 'Rock'},
-]
+];
+const gender = [
+    {label: "Male", value: 1},
+    {label: "Female", value: 2},
+    {label: "Nonbinary", value: 3},
+    {label: "Prefer Not to Say", value: 4}
+];
 
 const Signup = props => {
     return (
-        <form>
-                <h3>Don't Have an Account?</h3>
+        <div className="main">
+            <div className = "signup_sub-main">
+                <div>
+                    <div className="imgs">
+                        <div className="container-image">
+                            <img src={kindling_mini} alt="kindling" className="kindling"/>
+                        </div>
+                    </div>
+                        <h2>Don't Have an Account?</h2> 
+                        <form>
+                        <div className="information">
+                            <label>First Name   </label>
+                            <input type="text" className="input-signup" placeholder="Enter first name" />
+                        </div>
 
-                <div className="form-group">
-                    <label>First Name</label>
-                    <input type="text" className="form-control" placeholder="Enter first name" />
-                </div>
+                        <div className="information">
+                            <label>Last Name   </label>
+                            <input type="text" className="input-signup" placeholder="Enter last name" />
+                        </div>
 
-                <div className="form-group">
-                    <label>Last Name</label>
-                    <input type="text" className="form-control" placeholder="Enter last name" />
-                </div>
+                        <div className="information">
+                            <label>Email Address   </label>
+                            <input type="email" className="input-signup" placeholder="Enter email" />
+                        </div>
 
-                <div className="form-group">
-                    <label>Gender</label>
-                    <button type="radio" value="Male" name="gender"/>Male
-                    <button type="radio" value="Female" name="gender"/>Female
-                    <button type="radio" value="Nonbinary" name="gender"/>Nonbinary
-                    <button type="radio" value="Prefer Not to Say" name="gender"/>Prefer Not to Say
-                </div>
+                        <div className="information">
+                            <label>Password   </label>
+                            <input type="password" className="input-signup" placeholder="Enter password" />
+                        </div>
 
-                
-                <div className="form-group">
-                    <label>Email Address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
+                        <div className="information">
+                            <label>What is your gender?</label>
+                                <Creatable options={gender}
+                                    onChange={opt => console.log(opt.label, opt.value)}
+                                />
+                            <label>What are your hobbies?</label>
+                                <Creatable options={hobbies}
+                                    isMulti
+                                    onChange={(opt, meta) => console.log(opt, meta)}
+                                />
+                            <label>What sports do you like?</label>
+                                <Creatable options={sports}
+                                    isMulti
+                                    onChange={(opt, meta) => console.log(opt, meta)}
+                                />
+                            <label>What music do you like?</label>
+                                <Creatable options={music}
+                                    isMulti
+                                    onChange={(opt, meta) => console.log(opt, meta)}
+                                />
+                            <label>What is your personality type?</label>
+                                <Creatable options={personality}
+                                    onChange={opt => console.log(opt.label, opt.value)}
+                                />
+                        </div>
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
-
-                <div className="form-group">
-                    <label>What are your hobbies?</label>
-                        <Creatable options={hobbies}
-                            isMulti
-                            onChange={(opt, meta) => console.log(opt, meta)}
-                        />
-                    <label>What sports do you like?</label>
-                        <Creatable options={sports}
-                            isMulti
-                            onChange={(opt, meta) => console.log(opt, meta)}
-                        />
-                    <label>What music do you like?</label>
-                        <Creatable options={music}
-                            isMulti
-                            onChange={(opt, meta) => console.log(opt, meta)}
-                        />
-                    <label>What is your personality type?</label>
-                        <Creatable options={personality}
-                            isMulti
-                            onChange={(opt, meta) => console.log(opt, meta)}
-                        />
-                </div>
-
-                <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-                <p className="forgot-password text-right">
-                    Already registered <a href="/">Sign in?</a>
-                </p>
-            </form>
+                        <div className="login-button">
+                            <button type="submit">Sign Up</button>
+                        </div>
+                        <p className="already-registered text-right">
+                            Already registered? <a href="/">Sign in</a>
+                        </p>
+                        </form>
+                    </div> 
+            </div>
+        </div>
     );
 }
 
+/* const ResetPassword = props => {
+    return (
+        <div className="reset-wrapper">
+            <h1>Forgot Your Password?</h1>
+                <form>
+                    <label>
+                        <p>Enter New Password</p>
+                        <input type="resetpassword" className="form-control" placeholder="Enter new password"/>
+                    </label>
+                    <label>
+                    <p>Please Re-Enter New Password</p>
+                    <input type="confirmresetpassword" className="form-control" placeholder="Re-enter new password"/>
+                </label> 
+                </form>
+                <div>
+                    <Link to="/" className="btn btn-primary">Go Back</Link>
+                </div>
+        </div>
+        
+    );
+} 
 
-
-
+<p className="forgot-password text-right">
+    Forgot <a href="/Reset">password?</a>
+</p>
+*/
