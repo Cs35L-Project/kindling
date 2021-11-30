@@ -1,31 +1,41 @@
 import axios from "axios";
 
 generateFeed(userID){
-    const feed = []; //contains user ID's 
-    var numFeed = 0; //max is 10
+    var feed = [] 
+    const availUsers = getUsers(); //contains user ID's 
     const likedUser = [];
+    const userInterests = //get userID's interests
     //get a bunch of users
-    axios.all([getUserID(), getLikes()])
-    .then((userIDs, userLikes)=>{
+
         //check if usersID[], add userIDs that liked user to likedUser list
         var i = 0;
-        var numUsers;
-        while(numFeed < 10 && i < numUsers)
+        while(feed.length < 10 && i < availUsers.length)
         {
-            var currUserID; //get userID
-            var likedUser; //bool that checks if currUser liked user
+            const currUserID = availUsers[i].id; //get userID
+            var likedUser = false; //bool that checks if currUser liked user
+            var j;
+            for(j = 0; j<availUsers[i].likedList.length; j++){
+                if(availUsers[i].likedList[j] == userID)
+                {
+                    likedUser = true;
+                }
+            }
             if(likedUser)
             {
-                numFeed.unshift(currUserID);
+                feed.unshift(currUserID);
             }
-            else(/*check if enough interests to match*/)
+            else //look at interests
             {
-                numFeed.push(currUserID);
+                const currUserInterests = availUsers[i].interests //list of user interests
+                //make array of matching interests
+                const filteredStrArray = userInterests.filter(value => currUserInterests.includes(value)).filter((value, index, self) => self.indexOf(value) === index);
+                if(filteredStrArray.length > 2)
+                {
+                    feed.push(currUserID);
+                }
             }
             i++;
         }
-        //
-    })
 
 
-}
+};
