@@ -18,7 +18,7 @@ exports.create = (req, res) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             bio: req.body.bio,
-            interests: req.body.intersts
+            interests: req.body.interests
          })
         .then(data => {
             res.send(data);
