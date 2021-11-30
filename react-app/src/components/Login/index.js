@@ -121,25 +121,15 @@ const Signup = props => {
         selectedMusic: [],
         selectedPersonality: []
     })
-    console.log(state);
-    let saveData = () => {
-        //const interests = state.selectedHobbies.concat(state.selectedSports,state.selectedMusic,state.selectedPersonality);
-        const interests = {
-            ...state.selectedHobbies,
-            ...state.selectedMusic,
-            ...state.selectedPersonality,
-            ...state.selectedSports
-        };
-        var request = require('request');
 
-        /*
-        request(JSON.stringify(options,getCircularReplacer()), function (error, response, body){
-            console.log(state);
-            console.log(response);
-        });*/
-        //var formData = new FormData(document.querySelector('form'))
-        //request.post({url:'http://localhost:4000/api/users', form: formData})        
-        console.log(interests);
+    let saveData = () => {
+        const interests = [];
+        for(var i=0;i<state.selectedHobbies.length;i++) interests.push(state.selectedHobbies[i]['label'])
+        for(var i=0;i<state.selectedMusic.length;i++) interests.push(state.selectedMusic[i]['label'])
+        for(var i=0;i<state.selectedPersonality.length;i++) interests.push(state.selectedPersonality[i]['label'])
+        for(var i=0;i<state.selectedSports.length;i++) interests.push(state.selectedSports[i]['label'])
+        
+        var request = require('request');    
         request.post({url:'http://localhost:4000/api/users', 
         form: {
             username: state.username,
