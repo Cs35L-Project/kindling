@@ -8,6 +8,15 @@ const Op = db.Sequelize.Op;
 const { user } = require('../models');
 
 exports.login = (req, res) => {
+  try {
+        let u_auth = await user.authenticate(username, password)
+        u_auth = await u_auth.authorize();
+        return res.json(u_auth);
+    }
+    catch(err) {
+        return res.status(400).send(err);
+    }
+  
   // make sure user exists
   User.findOne({username: req.body.username }).then(
     (user) => {
