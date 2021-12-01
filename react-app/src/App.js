@@ -24,7 +24,7 @@ class App extends Component{
 function App() {
   const [state,setState] = useState({feed:[]})  //ID needs to be set by the login callback
   // Add token for user login authentication
-  const [token, setToken] = useState({ID: '9c90f34a-39da-44ef-b992-dd41078c9043'});
+  const [token, setToken] = useState({ID: 'c7907bd4-1073-41bc-a71d-ec927293e082'});
   //const [token, setToken] = useState();
   
   if(!token) {
@@ -149,6 +149,7 @@ const Gallery = props => {
   
   const setData = async () => {
     var matches = await getMatches(id);
+    if(matches==null) return;
     console.log(matches);
     let data = [];
     for (var i=0;i<matches.length;i++){
