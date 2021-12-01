@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom'
 import Profile from './components/profile';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
+import { generateFeed } from './components/profile/helper';
 
 /*
 class App extends Component{
@@ -21,22 +22,28 @@ class App extends Component{
 */
 
 function App() {
-  const [state,setState] = useState({ID:-5})  //ID needs to be set by the login callback
+  const [state,setState] = useState()  //ID needs to be set by the login callback
   // Add token for user login authentication
-  const [token, setToken] = useState();
-
+  const [token, setToken] = useState({ID: 'f630a2cc-4b8a-4259-bb44-8775397feab2'});
+  
   if(!token) {
     return <Login setToken={setToken} />
   }
   
-  var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
+  
+  //var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
+  var response = await generateFeed(token.ID);
+  const {data} = await response.json();
+  if(!state){
+    setState({feed: data});
+  }
   var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home userID={state.ID}/>} />
-        <Route path="/explore" element={<Explore userID={state.ID} potentialsDummy={potentialsDummy}/>} />
-        <Route path="/view" element={<Gallery userID={state.ID} matchesDummy={matchesDummy}/>} />
+        <Route path="/" element={<Home userID={token.ID}/>} />
+        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={potentialsDummy}/>} />
+        <Route path="/view" element={<Gallery userID={token.ID} matchesDummy={matchesDummy}/>} />
         <Route path="/view/:id" element={<View/>} />
       </Routes>
     </BrowserRouter>
