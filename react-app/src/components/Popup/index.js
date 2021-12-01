@@ -1,8 +1,20 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './index.css'
 import Creatable from 'react-select/creatable';
 
 function Popup(props) {
+    const [selectedFile, setSelectedFile] = useState();
+    const [isFilePicked, setIsFilePicked] = useState(false);
+    
+    const changeHandler = (event) => {
+        setSelectedFile(event.target.files[0]);
+        setIsFilePicked(true);
+    };
+
+    const handleSubmission = () => {
+
+    };
+
     return (props.trigger) ? (
         <div className="popup">
             <div className="popup-inner">
@@ -45,6 +57,21 @@ function Popup(props) {
                                 />
 
                         </div>
+
+                        <div className="bio">
+                            <form>
+                                <label>
+                                    Bio:
+                                    <input className="biography" type="text" name="text" />
+                                </label>
+                            </form>
+                        </div>
+
+                        <div className="image">
+                            <label>Upload a photo of yourself  </label>
+                            <input type="file" name="file" onChange={changeHandler} />
+                        </div>
+
                 <button type="submit">Submit</button>
                 </form>
             </div>
