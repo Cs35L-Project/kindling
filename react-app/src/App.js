@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom'
 import Profile from './components/profile';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
+import { generateFeed, sendLike, getMatches } from './components/profile/helper';
 
 /*
 class App extends Component{
@@ -21,20 +22,29 @@ class App extends Component{
 */
 
 function App() {
+  const [state,setState] = useState({feed:[]})  //ID needs to be set by the login callback
   // Add token for user login authentication
-  const [token, setToken] = useState();
-
+  const [token, setToken] = useState({ID: 'c7907bd4-1073-41bc-a71d-ec927293e082'});
+  //const [token, setToken] = useState();
+  
   if(!token) {
     return <Login setter={setToken} />
   }
   
-  var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
+  const setFeed = async () => {
+    var potentialsDummy = await generateFeed(token.ID);
+    if(state.feed.length==0){
+      setState({feed:potentialsDummy});
+    } 
+  }
+  setFeed();
+
   var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home userID={token.ID} key={token.ID}/>} />
-        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={potentialsDummy}/>} />
+        <Route path="/" element={<Home userID={token.ID}/>} />
+        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={state.feed}/>} />
         <Route path="/view" element={<Gallery userID={token.ID} matchesDummy={matchesDummy}/>} />
         <Route path="/view/:id" element={<View/>} />
       </Routes>
@@ -102,8 +112,9 @@ const Explore = props => {
     setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
   }
   const rightSwipe = () => {
-    //TODO: Communicate to backend that we 'liked' this user
-    setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length))});
+    sendLike(id,props.potentialsDummy[state.index]);
+    props.potentialsDummy.splice(state.index,1); //Delete that user from their list
+    setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
   }
   const exhaustedOptions = () => {
     return (
@@ -120,8 +131,8 @@ const Explore = props => {
       </div>
       <div className="explore_profile_wrapper" style={{"textAlign":"center"}}>
         <button onClick={leftSwipe}>X</button>
-        {props.potentialsDummy.length>0 ? <Profile userID={props.potentialsDummy[state.index]} size={"full"}/> : exhaustedOptions()}
-        <button onClick={rightSwipe}>Next</button>
+        {props.potentialsDummy.length>0 ? <Profile key={state.toggle} userID={props.potentialsDummy[state.index]} size={"full"}/> : exhaustedOptions()}
+        <button onClick={rightSwipe}>Like</button>
       </div>
     </div>
   );
@@ -132,12 +143,28 @@ const Explore = props => {
 //Clicking on an icon in this grid should bring up that user's complete profile
 //on a separate page (could be home)
 const Gallery = props => {
-  let id = props.userID; 
-  //TODO: Populate list of userID's to display to our user
-  //create list of <Profile> components to pass to <div className="container">
+  let id = props.userID;
+  //const [state,setState] = useState({matches:[],init:true});
+  const [state, setMatches] = useState();
   
-  // ### STAND IN FOR API Query  (Will want to move this whole section to parent component eventually for efficiency)
-  let matchesDummy = props.matchesDummy;
+  const setData = async () => {
+    var matches = await getMatches(id);
+    if(matches==null) return;
+    console.log(matches);
+    let data = [];
+    for (var i=0;i<matches.length;i++){
+      let routeString = "/view/"+matches[i].toString();
+      data.push(
+        <Link to={routeString}>
+        <Profile userID={matches[i]} size={"half"}/>
+        </Link>
+      );
+    }
+    if(!state) setMatches(data);
+  }
+  setData();
+  /*
+  let matchesDummy = state.matches;
   let data = [];
   for (var i=0;i<matchesDummy.length;i++){
     console.log(i);
@@ -147,9 +174,9 @@ const Gallery = props => {
       <Profile userID={matchesDummy[i]} size={"half"}/>
       </Link>
     );
-  }
+  }*/
   // these should eventually be passed to Gallery by App
-  const [matches, setMatches] = useState([data]);
+  //const [matches, setMatches] = useState([data]);
   // ### END API QUERY
   return (
     <div>
@@ -159,7 +186,7 @@ const Gallery = props => {
       </div>
       <div className="gallery_wrapper" style={{"text-align":"center"}}>
         <div className="container">
-          {matches}
+          {state}
         </div>
       </div>
     </div>
