@@ -59,7 +59,7 @@ function View(){
   );
 }
 const Home = props => {
-  const [state,setState] = useState({showForm:false})
+  const [state,setState] = useState()
   const [buttonPopup, setButtonPopup] = useState(false);
   return (
     <div>
