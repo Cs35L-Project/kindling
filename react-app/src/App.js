@@ -24,10 +24,13 @@ class App extends Component{
 function App() {
   const [state,setState] = useState({feed:[]})  //ID needs to be set by the login callback
   // Add token for user login authentication
-  const [token, setToken] = useState({ID: 'c7907bd4-1073-41bc-a71d-ec927293e082'});
-  //const [token, setToken] = useState();
-  
+  //const [token, setToken] = useState({ID: 'c7907bd4-1073-41bc-a71d-ec927293e082'});
+  const [token, setToken] = useState();
   if(!token) {
+    const saved = JSON.parse(localStorage.getItem("user"));
+    if(saved!=null){
+      setToken({ID:saved.id});
+    }
     return <Login setter={setToken} />
   }
   
