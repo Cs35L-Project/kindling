@@ -13,18 +13,31 @@ module.exports = app => {
 
     var router = require("express").Router();
 
+    // // Retrieve all Users
+    // router.get("/", authJwt.verifyToken, controller.findAll);
+
+    // // Retrieve a single User with id
+    // router.get("/:id", authJwt.verifyToken, controller.findOne);
+
+    // // Update a User with id
+    // //router.put("/:id", [authJwt.verifyToken], controller.update);
+    // router.put("/:id", authJwt.verifyToken, controller.update);
+
+    // // Upload an avatar for User with id
+    // router.put("/:id/upload", authJwt.verifyToken, upload.single("file"), controller.upload);
+
     // Retrieve all Users
-    router.get("/", authJwt.verifyToken, controller.findAll);
+    router.get("/", controller.findAll);
 
     // Retrieve a single User with id
-    router.get("/:id", authJwt.verifyToken, controller.findOne);
+    router.get("/:id", controller.findOne);
 
     // Update a User with id
     //router.put("/:id", [authJwt.verifyToken], controller.update);
-    router.put("/:id", authJwt.verifyToken, controller.update);
+    router.put("/:id", controller.update);
 
     // Upload an avatar for User with id
-    router.put("/:id/upload", authJwt.verifyToken, upload.single("file"), controller.upload)
+    router.put("/:id/upload", upload.single("file"), controller.upload);
 
     // // Delete a User with id
     // router.delete("/:id", controller.delete);
