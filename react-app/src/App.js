@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom';
 import Profile from './components/profile';
+import AuthService from './services/auth.service';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
 import { generateFeed, sendLike, getMatches } from './components/profile/helper';
@@ -46,7 +47,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home userID={token.ID}/>} />
+        <Route path="/" element={<Home userID={token.ID} setter={setToken}/>} />
         <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={state.feed}/>} />
         <Route path="/view" element={<Gallery userID={token.ID} matchesDummy={matchesDummy}/>} />
         <Route path="/view/:id" element={<View/>} />
@@ -87,9 +88,19 @@ const Home = props => {
        </div>
       );
   }
+  const logout = () => {
+    AuthService.logout();
+    props.setter(null);
+  }
   return (
     <div>
-      <h1 style={{"text-align":"center"}}>Home Page</h1>
+      <div>
+        <h1 style={{"text-align":"center"}}>Home Page</h1>
+        <div style={{"text-align":"right"}}>
+          <button onClick={logout}>Logout</button>
+        </div>
+      </div>
+      
       <div style={{"text-align":"left"}}>
         <Link to="/explore" className="explore_link">Explore!</Link>
       </div>
