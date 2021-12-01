@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
+global.__uploadsdir = __dirname + "/uploads/"
+
 var corsOptions = {
     origin: "http://localhost:3000"
   };
@@ -19,10 +21,10 @@ app.use(express.urlencoded({ extended: true }));
 const db = require('./app/models');
 
  db.sequelize.sync();
-// drop the table if it already exists
-/*db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});*/
+// // drop the table if it already exists
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and re-sync db.");
+// });
 
 // Routes
 require("./app/routes/user.routes")(app);

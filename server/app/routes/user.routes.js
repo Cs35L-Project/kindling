@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
+const upload = require("../middleware/upload");
 
 module.exports = app => {
     app.use(function (req, res, next) {
@@ -21,6 +22,9 @@ module.exports = app => {
     // Update a User with id
     //router.put("/:id", [authJwt.verifyToken], controller.update);
     router.put("/:id", controller.update);
+
+    // Upload an avatar for User with id
+    router.put("/:id/upload", upload.single("file"), controller.upload)
 
     // Delete a User with id
     router.delete("/:id", controller.delete);
