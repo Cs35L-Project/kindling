@@ -1,28 +1,28 @@
-module.exports = (sequelize, Datatypes) => {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define("user", {
     id: {
       primaryKey: true,
-      type: Datatypes.UUID,
-      defaultValue: Datatypes.UUIDV4
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
     },
     username: {
-      type: Datatypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     password: {
-      type: Datatypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     firstName: {
-      type: Datatypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     lastName: {
-      type: Datatypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     fullName: {
-      type: Datatypes.VIRTUAL,
+      type: DataTypes.VIRTUAL,
       get() {
         return `${this.firstName} ${this.lastName}`;
       },
@@ -31,22 +31,23 @@ module.exports = (sequelize, Datatypes) => {
       }
     },
     avatar: {
-      type: Datatypes.STRING,
+      type: DataTypes.STRING,
       get() {
-          return __uploadsdir + `${this.avatar}`;
+          avatarFile = this.getDataValue("avatar");
+          return __uploadsdir + avatarFile;
       }
     },
     bio: {
-      type: Datatypes.STRING
+      type: DataTypes.STRING
     },
     interests: {
-      type: Datatypes.JSON
+      type: DataTypes.JSON
     },
     likes: {
-      type: Datatypes.JSON
+      type: DataTypes.JSON
     },
     matches: {
-      type: Datatypes.JSON
+      type: DataTypes.JSON
     }
   });
 

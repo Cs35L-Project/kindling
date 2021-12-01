@@ -23,8 +23,8 @@ module.exports = app => {
     //router.put("/:id", [authJwt.verifyToken], controller.update);
     router.put("/:id", controller.update);
 
-    // Upload an avatar for User with id
-    router.put("/:id/upload", upload.single("file"), controller.upload)
+    // // Upload an avatar for User with id
+    // router.put("/:id/upload", upload.single("file"), controller.upload)
 
     // Delete a User with id
     router.delete("/:id", controller.delete);
