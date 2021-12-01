@@ -38,12 +38,12 @@ export async function generateFeed(userID){
         console.log(error);
         console.log("Could not get list of all users")
     })
-
+    console.log(availUsers[0].id)
     //add users that liked matchingUsers
     var a = 0;
     while(feed.length < 10 && a < availUsers.length)
     {
-        var currUser = await fetch("http://localhost:4000/api/users/" + availUsers[a]) //get currUser based on userID of likes[a]
+        var currUser = await fetch("http://localhost:4000/api/users/" + availUsers[a].id) //get currUser based on userID of likes[a]
         .then(response => response.json())
         .then(function(data)
         {
@@ -55,7 +55,7 @@ export async function generateFeed(userID){
             console.log("Could not get currUser based on userID of likes[a]")
         })
 
-        if(currUser.likes.includes(userID))
+        if(JSON.parse(currUser.likes) && JSON.parse(currUser.likes).includes(userID))
         {            
             //add to feed
             feed.unshift(currUser.id);
@@ -76,12 +76,16 @@ export async function generateFeed(userID){
             continue;
         }
         const currUserInterests = availUsers[i].interests //list of user interests
-                //make array of matching interests
-        const filteredStrArray = userInterests.filter(value => currUserInterests.includes(value)).filter((value, index, self) => self.indexOf(value) === index);
-        if(filteredStrArray.length > 2)
-        {
-            feed.push(currUserID);
+        if(currUserInterests != null){
+            console.log(currUserInterests)
+            //make array of matching interests
+            const filteredStrArray = userInterests.filter(value => currUserInterests.includes(value)).filter((value, index, self) => self.indexOf(value) === index);
+            if(!filteredStrArray && filteredStrArray.length > 2)
+            {
+                feed.push(currUserID);
+            }
         }
+        
         i++;
     }
 
@@ -92,16 +96,12 @@ export async function generateFeed(userID){
         const currUserID = availUsers[c].id;
         if(userID == currUserID || feed.includes(currUserID)) //skip if user matched with itself or currUser is already in list
         {
-            i++;
+            c++;
             continue;
         }
         feed.push(currUserID)
+        c++;
     }
 
     return feed;
-}
-
-export function sendLike(userID, userIDLiked){
-    const data = 
-    
 }
