@@ -67,7 +67,7 @@ export async function generateFeed(userID){
     const userInterests = matchingUser.interests//get userID's interests        
     //add users with common interests
     var i = 0;
-    while(feed.length < 10 && i < availUsers.length)
+    while(feed.length < 10 && i < availUsers.length && userInterests !=null)
     {   
         const currUserID = availUsers[i].id; //get userID of current user
         if(userID == currUserID || feed.includes(currUserID)) //skip if user matched with itself or currUser is already in list

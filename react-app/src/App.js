@@ -24,11 +24,14 @@ class App extends Component{
 function App() {
   const [state,setState] = useState({feed:[]})  //ID needs to be set by the login callback
   // Add token for user login authentication
-  const [token, setToken] = useState({ID: 'c7907bd4-1073-41bc-a71d-ec927293e082'});
-  //const [token, setToken] = useState();
-  
+  //const [token, setToken] = useState({ID: 'c7907bd4-1073-41bc-a71d-ec927293e082'});
+  const [token, setToken] = useState();
   if(!token) {
-    return <Login setToken={setToken} />
+    const saved = JSON.parse(localStorage.getItem("user"));
+    if(saved!=null){
+      setToken({ID:saved.id});
+    }
+    return <Login setter={setToken} />
   }
   
   const setFeed = async () => {
@@ -163,21 +166,6 @@ const Gallery = props => {
     if(!state) setMatches(data);
   }
   setData();
-  /*
-  let matchesDummy = state.matches;
-  let data = [];
-  for (var i=0;i<matchesDummy.length;i++){
-    console.log(i);
-    let routeString = "/view/"+matchesDummy[i].toString();
-    data.push(
-      <Link to={routeString}>
-      <Profile userID={matchesDummy[i]} size={"half"}/>
-      </Link>
-    );
-  }*/
-  // these should eventually be passed to Gallery by App
-  //const [matches, setMatches] = useState([data]);
-  // ### END API QUERY
   return (
     <div>
       <h1 style={{"text-align":"center"}}>Everyone you've matched with!</h1>
@@ -193,28 +181,5 @@ const Gallery = props => {
   );
 }
 
-
-/*
-        <Route path="users/*" element={<Users />} />
-function Users() {
-  /* All <Route path> and <Link to> values in this
-     component will automatically be "mounted" at the
-     /users URL prefix since the <Users> element is only
-     ever rendered when the URL matches /users/*
-  #END COMMENT HERE
-  return (
-    <div>
-      <nav>
-        <Link to="me">My Profile</Link>
-      </nav>
-      <Routes>
-        <Route path="/" element={<UsersIndex />} />
-        <Route path=":id" element={<UserProfile />} />
-        <Route path="me" element={<OwnUserProfile />} />
-      </Routes>
-    </div>
-  );
-}
-*/
 
 export default App;
