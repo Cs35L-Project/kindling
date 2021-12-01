@@ -21,12 +21,11 @@ class App extends Component{
 */
 
 function App() {
-  const [state,setState] = useState({ID:-5})  //ID needs to be set by the login callback
   // Add token for user login authentication
   const [token, setToken] = useState();
 
   if(!token) {
-    return <Login setToken={setToken} />
+    return <Login setter={setToken} />
   }
   
   var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
@@ -34,9 +33,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home userID={state.ID}/>} />
-        <Route path="/explore" element={<Explore userID={state.ID} potentialsDummy={potentialsDummy}/>} />
-        <Route path="/view" element={<Gallery userID={state.ID} matchesDummy={matchesDummy}/>} />
+        <Route path="/" element={<Home userID={token.ID} key={token.ID}/>} />
+        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={potentialsDummy}/>} />
+        <Route path="/view" element={<Gallery userID={token.ID} matchesDummy={matchesDummy}/>} />
         <Route path="/view/:id" element={<View/>} />
       </Routes>
     </BrowserRouter>

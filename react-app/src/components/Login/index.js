@@ -9,11 +9,12 @@ import kindling_mini from "./image/kindling_mini.png";
 import lock from "./image/lock.png";
 import profile from "./image/profile-user.png";
 
-export default function Login() {
+const Login = props => {
+    console.log(typeof props.setter)
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<LoginPage/>} />
+                <Route path="/" element={<LoginPage setter={props.setter}/>} />
                 <Route path="/Signup" element={<Signup/>} />
                 
             </Routes>
@@ -24,6 +25,14 @@ export default function Login() {
 /* <Route path="/Reset" element={<ResetPassword/>} /> */
 
 const LoginPage = props => {
+    console.log(props);
+    const[state, setState] = useState();
+    let submitLogin = () => {
+        let token = AuthService.login(state.username,state.password);
+        token.then(response => {
+            props.setter({ID: response.id});
+        });
+    }
     return (
         <div className="main">
             <div className = "sub-main">
@@ -38,18 +47,20 @@ const LoginPage = props => {
                         <form>
                             <div>
                                 <img src={profile} alt="profile" className="mini"/>
-                                <input type="text" className="input-login" placeholder="Enter username"/>
+                                <input type="text" className="input-login" placeholder="Enter username"
+                                 onChange={(e) => setState({...state,username:e.target.value})}/>
                             </div>
                             <div className="second-input">
                                 <img src={lock} alt="lock" className="mini"/>
-                                <input type="password" className="input-login" placeholder="Enter password"/>
+                                <input type="password" className="input-login" placeholder="Enter password"
+                                 onChange={(e) => setState({...state,password:e.target.value})}/>
                             </div>
                             <div className="custom-control custom-checkbox">
                                 <input type="checkbox" className="checkbox" id="customCheck1" />
                                 <label className="checkbox" htmlFor="customCheck1">Remember me</label>
                             </div>
                             <div className="login-button">
-                                <button type="submit">Submit</button>
+                                <button type="button" onClick={submitLogin}>Submit</button>
                             </div>
                             <div className="link">
                                 No account? <Link to="/Signup">Signup</Link>
@@ -159,7 +170,7 @@ const Signup = props => {
             state.password,
             state.firstName,
             state.lastName,
-            state.interests
+            interests
         );
 
         // var request = require('request');    
@@ -247,7 +258,7 @@ const Signup = props => {
         </div>
     );
 }
-
+export default Login;
 /* const ResetPassword = props => {
     return (
         <div className="reset-wrapper">
