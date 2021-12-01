@@ -65,7 +65,7 @@ module.exports = (sequelize, Sequelize) => {
         error: new Error("Wrong password!")
       })
     }
-
+  } 
     User.prototype.authorize = async function ()
     {
       const { authToken } = sequelize.models;
@@ -75,7 +75,7 @@ module.exports = (sequelize, Sequelize) => {
       return {user, token}
     };
 
-  }
+  
 
   return User;
 };

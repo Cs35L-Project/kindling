@@ -24,7 +24,6 @@ const Profile = props => {      //props should be a unique id corresponding to t
                 Interests: response.interests,
                 UID: props.userID, 
             };
-            console.log(response)
             setProfile(data);
         })
         .catch((e) => {
@@ -32,7 +31,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
             console.log("cannot connect to server");
         })
     }
-    console.log(profile);
+
     if(props.size=="full"){
         if(props.root){
             return (

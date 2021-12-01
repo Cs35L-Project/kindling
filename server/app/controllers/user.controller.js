@@ -33,10 +33,11 @@ exports.create = (req, res) => {
    
 };
 
-const { u_auth } = require('../models');
+const { u_auth } = require('../models/user.model');
 
 // User login
-exports.login = (req, res) => {
+
+exports.login = async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
     return res.status(400).send({
