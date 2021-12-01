@@ -59,12 +59,10 @@ function Popup(props) {
                         </div>
 
                         <div className="bio">
-                            <form>
                                 <label>
                                     Bio:
                                     <input className="biography" type="text" name="text" />
                                 </label>
-                            </form>
                         </div>
 
                         <div className="image">
