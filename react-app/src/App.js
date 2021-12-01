@@ -22,27 +22,29 @@ class App extends Component{
 */
 
 function App() {
-  const [state,setState] = useState()  //ID needs to be set by the login callback
+  const [state,setState] = useState({feed:[]})  //ID needs to be set by the login callback
   // Add token for user login authentication
   const [token, setToken] = useState({ID: 'f630a2cc-4b8a-4259-bb44-8775397feab2'});
+  //const [token, setToken] = useState();
   
   if(!token) {
     return <Login setToken={setToken} />
   }
   
-  
-  //var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
-  var response = await generateFeed(token.ID);
-  const {data} = await response.json();
-  if(!state){
-    setState({feed: data});
+  const setFeed = async () => {
+    var potentialsDummy = await generateFeed(token.ID);
+    if(state.feed.length==0){
+      setState({feed:potentialsDummy});
+    } 
   }
+  setFeed();
+
   var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home userID={token.ID}/>} />
-        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={potentialsDummy}/>} />
+        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={state.feed}/>} />
         <Route path="/view" element={<Gallery userID={token.ID} matchesDummy={matchesDummy}/>} />
         <Route path="/view/:id" element={<View/>} />
       </Routes>
