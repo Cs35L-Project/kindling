@@ -38,6 +38,7 @@ const { u_auth } = require('../models');
 // User login
 exports.login = (req, res) => {
     const { username, password } = req.body;
+    console.log("ERROR")
     if (!username || !password) {
     return res.status(400).send({
         message:
@@ -48,7 +49,7 @@ exports.login = (req, res) => {
     let u_auth = await user.auth(username, password)
     u_auth = await u_auth.authorize();
     if (u_auth)
-        return res.json(u_auth);
+        res.json(u_auth);
     else
         return res.status(400).send(err);
 };
