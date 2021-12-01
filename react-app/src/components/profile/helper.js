@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export function generateFeed(userID){
+export async function generateFeed(userID){
     var feed = []; 
-    var matchingUser = fetch("http://localhost:4000/api/users/" + userID) //get user object using userID
+    var matchingUser = await fetch("http://localhost:4000/api/users/" + userID) //get user object using userID
     .then(response => response.json())
     .then(function(data)
     {
@@ -15,7 +15,7 @@ export function generateFeed(userID){
     })
 
     //contains list of all users 
-    const availUsers = fetch("http://localhost:4000/api/users/")
+    const availUsers = await fetch("http://localhost:4000/api/users/")
     .then(response => response.json())
     .then(function(data)
     {
@@ -43,7 +43,7 @@ export function generateFeed(userID){
     var a = 0;
     while(feed.length < 10 && a < availUsers.length)
     {
-        var currUser = fetch("http://localhost:4000/api/users/" + availUsers[a]) //get currUser based on userID of likes[a]
+        var currUser = await fetch("http://localhost:4000/api/users/" + availUsers[a]) //get currUser based on userID of likes[a]
         .then(response => response.json())
         .then(function(data)
         {
@@ -99,4 +99,9 @@ export function generateFeed(userID){
     }
 
     return feed;
+}
+
+export function sendLike(userID, userIDLiked){
+    const data = 
+    
 }
