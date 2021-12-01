@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom'
 import Profile from './components/profile';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
-import { generateFeed, sendLike } from './components/profile/helper';
+import Popup from './components/Popup'
 
 /*
 class App extends Component{
@@ -22,30 +22,22 @@ class App extends Component{
 */
 
 function App() {
-  const [state,setState] = useState({feed:[]})  //ID needs to be set by the login callback
+  const [state,setState] = useState({ID:-5})  //ID needs to be set by the login callback
   // Add token for user login authentication
-  const [token, setToken] = useState({ID: '9c90f34a-39da-44ef-b992-dd41078c9043'});
-  //const [token, setToken] = useState();
-  
+  const [token, setToken] = useState();
+
   if(!token) {
     return <Login setToken={setToken} />
   }
   
-  const setFeed = async () => {
-    var potentialsDummy = await generateFeed(token.ID);
-    if(state.feed.length==0){
-      setState({feed:potentialsDummy});
-    } 
-  }
-  setFeed();
-
+  var potentialsDummy = Array.from({length: 16}, () => Math.floor(Math.random() * 100000));
   var matchesDummy = Array.from({length: 48}, () => Math.floor(Math.random() * 100000));
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home userID={token.ID}/>} />
-        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={state.feed}/>} />
-        <Route path="/view" element={<Gallery userID={token.ID} matchesDummy={matchesDummy}/>} />
+        <Route path="/" element={<Home userID={state.ID}/>} />
+        <Route path="/explore" element={<Explore userID={state.ID} potentialsDummy={potentialsDummy}/>} />
+        <Route path="/view" element={<Gallery userID={state.ID} matchesDummy={matchesDummy}/>} />
         <Route path="/view/:id" element={<View/>} />
       </Routes>
     </BrowserRouter>
@@ -68,22 +60,7 @@ function View(){
 }
 const Home = props => {
   const [state,setState] = useState({showForm:false})
-  const showForm = () => {
-    return (
-      <div> 
-     <form id= "edit-profile">
- 
-          <label>Name : </label>
-          <input type="text" />
- 
-          <label>Interests : </label>
-          <input type="text" />
- 
-          <button>Save</button>
-       </form>
-       </div>
-      );
-  }
+  const [buttonPopup, setButtonPopup] = useState(false);
   return (
     <div>
       <h1 style={{"text-align":"center"}}>Home Page</h1>
@@ -92,11 +69,20 @@ const Home = props => {
       </div>
       <div style={{"text-align":"right"}}>
         <Link to="/view" className="view_link">View Matches!</Link>
+
+      </div>
+        <button onClick={() => setButtonPopup(true)}>Edit</button>
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        </Popup>
+      <div>
+
+
+
       </div>
       <div className="profile_wrapper" style={{"text-align":"center"}}>
-        <Profile userID={props.userID} size={"full"} root={true} toggleEdit={setState} state={state.showForm}/>
+        <Profile userID={props.userID} size={"full"} root={true} toggleEdit={setState}/>
       </div>
-      {state.showForm ? showForm() : null}
+  
     </div>
   );
 }
@@ -112,9 +98,8 @@ const Explore = props => {
     setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
   }
   const rightSwipe = () => {
-    sendLike(id,props.potentialsDummy[state.index]);
-    props.potentialsDummy.splice(state.index,1); //Delete that user from their list
-    setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
+    //TODO: Communicate to backend that we 'liked' this user
+    setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length))});
   }
   const exhaustedOptions = () => {
     return (
@@ -131,8 +116,8 @@ const Explore = props => {
       </div>
       <div className="explore_profile_wrapper" style={{"textAlign":"center"}}>
         <button onClick={leftSwipe}>X</button>
-        {props.potentialsDummy.length>0 ? <Profile key={state.toggle} userID={props.potentialsDummy[state.index]} size={"full"}/> : exhaustedOptions()}
-        <button onClick={rightSwipe}>Like</button>
+        {props.potentialsDummy.length>0 ? <Profile userID={props.potentialsDummy[state.index]} size={"full"}/> : exhaustedOptions()}
+        <button onClick={rightSwipe}>Next</button>
       </div>
     </div>
   );
