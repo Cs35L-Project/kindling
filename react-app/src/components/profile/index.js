@@ -48,10 +48,11 @@ const Profile = props => {      //props should be a unique id corresponding to t
         else{
             return (
                 <div className="rectangle">
-                    <h1>NAME</h1>
+                    <h1>{profile.Name}</h1>
                     <h2>PICTURE</h2>
-                    <h3>DESCRIPTION</h3>
-                    <h4>USER ID: {props.userID}</h4>
+                    <h3>{profile.Description}</h3>
+                    <h4>{profile.Interests}</h4>
+                    <h5>USER ID: {props.userID}</h5>
                 </div>
             );
         }
@@ -59,7 +60,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
     else{
         return (
             <div className="square">
-                <h1>NAME</h1>
+                <h1>{profile.Name}</h1>
                 <h2>PICTURE</h2>
                 <h3>USER ID: {props.userID}</h3>
             </div>
