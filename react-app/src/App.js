@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom'
 import Profile from './components/profile';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
-import { generateFeed } from './components/profile/helper';
+import { generateFeed, sendLike } from './components/profile/helper';
 
 /*
 class App extends Component{
@@ -112,7 +112,8 @@ const Explore = props => {
     setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
   }
   const rightSwipe = () => {
-    //TODO: Communicate to backend that we 'liked' this user
+    sendLike(id,props.potentialsDummy[state.index]);
+    props.potentialsDummy.splice(state.index,1); //Delete that user from their list
     setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
   }
   const exhaustedOptions = () => {
