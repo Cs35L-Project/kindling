@@ -19,7 +19,8 @@ module.exports = app => {
     router.get("/:id", controller.findOne);
 
     // Update a User with id
-    router.put("/:id", [authJwt.verifyToken], controller.update);
+    //router.put("/:id", [authJwt.verifyToken], controller.update);
+    router.put("/:id", controller.update);
 
     // Delete a User with id
     router.delete("/:id", controller.delete);

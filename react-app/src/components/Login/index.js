@@ -25,7 +25,6 @@ const Login = props => {
 /* <Route path="/Reset" element={<ResetPassword/>} /> */
 
 const LoginPage = props => {
-    console.log(props);
     const[state, setState] = useState();
     let submitLogin = () => {
         let token = AuthService.login(state.username,state.password);
