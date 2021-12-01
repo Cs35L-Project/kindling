@@ -33,17 +33,14 @@ export async function generateFeed(userID){
             [userArray[i], userArray[j]] = [userArray[j], userArray[i]];
           }
 
-          for(let i = 0; i<matchingUser.likes.length; i++)
+          for(let a = 0; a<matchingUser.likes.length; a++)
           {
-              for(let j = userArray.length-1; j>=0; j--)
-              {
-                  if(matchingUser.likes[i] == userArray[j])
-                  {
-                      userArray.splice(j, 1);
-                  }
+              var ind = userArray.indexOf(matchingUser.likes[a]);
+              if(ind != -1){
+                  userArray.splice(ind, 1);
               }
           }
-          
+
         return userArray;
     })
     .catch(function(error)

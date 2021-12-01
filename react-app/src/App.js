@@ -78,10 +78,6 @@ const Home = props => {
     AuthService.logout();
     props.setter(null);
   }
-  const logout = () => {
-    AuthService.logout();
-    props.setter(null);
-  }
   return (
     <div>
       <div>
