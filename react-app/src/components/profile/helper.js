@@ -39,7 +39,6 @@ export async function generateFeed(userID){
         console.log(error);
         console.log("Could not get list of all users")
     })
-    console.log(availUsers[0].id)
     //add users that liked matchingUsers
     var a = 0;
     while(feed.length < 10 && a < availUsers.length)
@@ -55,8 +54,8 @@ export async function generateFeed(userID){
             console.log(error)
             console.log("Could not get currUser based on userID of likes[a]")
         })
-
-        if(JSON.parse(currUser.likes) && JSON.parse(currUser.likes).includes(userID))
+        
+        if(currUser.likes != null && currUser.likes.includes(userID))
         {            
             //add to feed
             feed.unshift(currUser.id);
@@ -78,7 +77,6 @@ export async function generateFeed(userID){
         }
         const currUserInterests = availUsers[i].interests //list of user interests
         if(currUserInterests != null){
-            console.log(currUserInterests)
             //make array of matching interests
             const filteredStrArray = userInterests.filter(value => currUserInterests.includes(value)).filter((value, index, self) => self.indexOf(value) === index);
             if(!filteredStrArray && filteredStrArray.length > 2)
@@ -124,10 +122,15 @@ export async function sendLike(userID, userIDLiked){
     .then(response => response.json())
     .then(function(data)
     {
+        if(data.likes==null) data.likes = []
+        if(data.matches==null) data.matches = []
         data.likes.push(userIDLiked);
-        if(currUserLiked.likes.includes(userID))
+        if(currUserLiked.likes!=null && currUserLiked.likes.includes(userID))
         {
             data.matches.push(userIDLiked);
+            if(currUserLiked.matches==null) currUserLiked.matches = [];
+            currUserLiked.matches.push(userID);
+            axios.put("http://localhost:4000/api/users/" + userIDLiked,currUserLiked);
         }
         return data;
     })
@@ -138,4 +141,5 @@ export async function sendLike(userID, userIDLiked){
     })
     const currUserURL = "http://localhost:4000/api/users/" + userID; 
     axios.put(currUserURL, currUser);
+    
 }
