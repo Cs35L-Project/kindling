@@ -4,6 +4,7 @@ import Profile from './components/profile';
 import AuthService from './services/auth.service';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
+import Popup from './components/Popup';
 import { generateFeed, sendLike, getMatches } from './components/profile/helper';
 
 /*
@@ -71,22 +72,11 @@ function View(){
   );
 }
 const Home = props => {
-  const [state,setState] = useState({showForm:false})
-  const showForm = () => {
-    return (
-      <div> 
-     <form id= "edit-profile">
- 
-          <label>Name : </label>
-          <input type="text" />
- 
-          <label>Interests : </label>
-          <input type="text" />
- 
-          <button>Save</button>
-       </form>
-       </div>
-      );
+  const [state,setState] = useState()
+  const [buttonPopup, setButtonPopup] = useState(false)
+  const logout = () => {
+    AuthService.logout();
+    props.setter(null);
   }
   const logout = () => {
     AuthService.logout();
@@ -107,10 +97,14 @@ const Home = props => {
       <div style={{"text-align":"right"}}>
         <Link to="/view" className="view_link">View Matches!</Link>
       </div>
+
+      <button onClick={() => setButtonPopup(true)}>Edit</button>
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        </Popup>
+      
       <div className="profile_wrapper" style={{"text-align":"center"}}>
-        <Profile userID={props.userID} size={"full"} root={true} toggleEdit={setState} state={state.showForm}/>
+        <Profile userID={props.userID} size={"full"} root={true} toggleEdit={setState}/>
       </div>
-      {state.showForm ? showForm() : null}
     </div>
   );
 }

@@ -33,29 +33,15 @@ const Profile = props => {      //props should be a unique id corresponding to t
     }
 
     if(props.size=="full"){
-        if(props.root){
-            return (
-                <div className="rectangle">
-                    <div style={{"text-align":"left"}}><button onClick={() => props.toggleEdit({showForm:!props.state})}>Edit</button></div>
-                    <h1>{profile.Name}</h1>
-                    <h2>PICTURE</h2>
-                    <h3>{profile.Description}</h3>
-                    <h4>{profile.Interests}</h4>
-                    <h5>USER ID: {props.userID}</h5>
-                </div>
+        return (
+            <div className="rectangle">
+                <h1>{profile.Name}</h1>
+                <h2>PICTURE</h2>
+                <h3>{profile.Description}</h3>
+                <h4>{profile.Interests}</h4>
+                <h5>USER ID: {props.userID}</h5>
+            </div>
             );
-        }
-        else{
-            return (
-                <div className="rectangle">
-                    <h1>{profile.Name}</h1>
-                    <h2>PICTURE</h2>
-                    <h3>{profile.Description}</h3>
-                    <h4>{profile.Interests}</h4>
-                    <h5>USER ID: {props.userID}</h5>
-                </div>
-            );
-        }
     }
     else{
         return (
