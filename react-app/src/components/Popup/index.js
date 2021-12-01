@@ -69,7 +69,7 @@ function Popup(props) {
                             <label>Upload a photo of yourself  </label>
                             <form
                                 class="mt-4"
-                                action="/upload"
+                                action="http:/localhost:4000/api/users/:id/upload"
                                 method="POST"
                                 enctype="multipart/form-data"
                             >
