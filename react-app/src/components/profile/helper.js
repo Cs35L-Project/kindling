@@ -32,15 +32,15 @@ export async function generateFeed(userID){
             // let t = array[i]; array[i] = array[j]; array[j] = t
             [userArray[i], userArray[j]] = [userArray[j], userArray[i]];
           }
-
+          /*
           for(let a = 0; a<matchingUser.likes.length; a++)
           {
               var ind = userArray.indexOf(matchingUser.likes[a]);
               if(ind != -1){
-                 // userArray.splice(ind, 1);
+                  userArray.splice(ind, 1);
               }
           }
-
+          */
         return userArray;
     })
     .catch(function(error)
@@ -64,6 +64,11 @@ export async function generateFeed(userID){
             console.log("Could not get currUser based on userID of likes[a]")
         })
 
+        if(matchingUser.likes.indexOf(currUser.id) != -1){
+            a++;
+            continue;
+        }
+
         if(currUser.likes != null && currUser.likes.includes(userID))
         {            
             //add to feed
@@ -79,7 +84,7 @@ export async function generateFeed(userID){
     while(feed.length < 10 && i < availUsers.length && userInterests !=null)
     {   
         const currUserID = availUsers[i].id; //get userID of current user
-        if(userID == currUserID || feed.includes(currUserID)) //skip if user matched with itself or currUser is already in list
+        if(userID == currUserID || feed.includes(currUserID) || (matchingUser.likes.indexOf(currUser.id) != -1)) //skip if user matched with itself or currUser is already in list or if already liked
         {
             i++;
             continue;
@@ -102,7 +107,7 @@ export async function generateFeed(userID){
     while(feed.length < 10 && c < availUsers.length)
     {
         const currUserID = availUsers[c].id;
-        if(userID == currUserID || feed.includes(currUserID)) //skip if user matched with itself or currUser is already in list
+        if(userID == currUserID || feed.includes(currUserID) || (matchingUser.likes.indexOf(currUser.id) != -1)) //skip if user matched with itself or currUser is already in list
         {
             c++;
             continue;
