@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import './index.css';
 import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import AuthService from '../../services/auth.service';
 import Creatable from 'react-select/creatable';
-import kindling from "./image/kindling.png"
-import kindling_mini from "./image/kindling_mini.png"
-import lock from "./image/lock.png"
-import profile from "./image/profile-user.png"
+import kindling from "./image/kindling.png";
+import kindling_mini from "./image/kindling_mini.png";
+import lock from "./image/lock.png";
+import profile from "./image/profile-user.png";
 
 export default function Login() {
     return(
@@ -153,16 +154,24 @@ const Signup = props => {
         for(var i=0;i<state.selectedPersonality.length;i++) interests.push(state.selectedPersonality[i]['label'])
         for(var i=0;i<state.selectedSports.length;i++) interests.push(state.selectedSports[i]['label'])
         
-        var request = require('request');    
-        request.post({url:'http://localhost:4000/api/users', 
-        form: {
-            username: state.username,
-            password: state.password,
-            firstName: state.firstName,
-            lastName: state.lastName,
-            interests: interests,
-        }
-        });
+        AuthService.register(
+            state.username,
+            state.password,
+            state.firstName,
+            state.lastName,
+            state.interests
+        );
+
+        // var request = require('request');    
+        // request.post({url:'http://localhost:4000/api/users', 
+        // form: {
+        //     username: state.username,
+        //     password: state.password,
+        //     firstName: state.firstName,
+        //     lastName: state.lastName,
+        //     interests: interests,
+        // }
+        // });
     }
     return (
         <div className="main">
