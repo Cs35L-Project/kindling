@@ -1,31 +1,31 @@
+const { authJwt } = require("../middleware");
+const controller = require("../controllers/user.controller");
+
 module.exports = app => {
-  const users = require("../controllers/user.controller.js");
+    app.use(function (req, res, next) {
+        res.header(
+            "Access-Control-Allow-Headers",
+            "x-access-token, Origin, Content-Type, Accept"
+        );
+        next();
+    });
 
-  var router = require("express").Router();
+    var router = require("express").Router();
 
-  // Create a new User
-  router.post("/", users.create);
+    // Retrieve all Users
+    router.get("/", [authJwt.verifyToken], controller.findAll);
 
-  // Retrieve all Users
+    // Retrieve a single User with id
+    router.get("/:id", [authJwt.verifyToken], controller.findOne);
 
-   // Login
-  //router.post("/login", users.login);
-  
-  // Retrieve all User
+    // Update a User with id
+    router.put("/:id", [authJwt.verifyToken], controller.update);
 
-  router.get("/", users.findAll);
+    // Delete a User with id
+    router.delete("/:id", controller.delete);
 
-  // Retrieve a single User with id
-  router.get("/:id", users.findOne);
+    // Delete all Users
+    router.delete("/", controller.deleteAll);
 
-  // Update a User with id
-  router.put("/:id", users.update);
-
-  // Delete a User with id
-  router.delete("/:id", users.delete);
-
-  // Delete all Users
-  router.delete("/", users.deleteAll);
-
-  app.use('/api/users', router);
+    app.use("/api/users", router);
 };
