@@ -13,10 +13,6 @@ module.exports = (sequelize, Datatypes) => {
       type: Datatypes.STRING,
       allowNull: false
     },
-    email: {
-        type: Datatypes.STRING,
-        allowNull: false
-    },
     firstName: {
       type: Datatypes.STRING,
       allowNull: false
@@ -33,9 +29,6 @@ module.exports = (sequelize, Datatypes) => {
       set(value) {
         throw new Error("Do not try to set the `fullName` value!")
       }
-    },
-    gender: {
-        type: Datatypes.STRING
     },
     avatar: {
       type: Datatypes.STRING

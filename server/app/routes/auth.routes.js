@@ -15,7 +15,7 @@ module.exports = function (app) {
     // Signup the User
     router.post(
         "/signup",
-        verifySignUp.checkDuplicateUsernameOrEmail,
+        verifySignUp.checkDuplicateUsername,
         controller.signup
     );
 
