@@ -1,28 +1,32 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, Datatypes) => {
   const User = sequelize.define("user", {
     id: {
       primaryKey: true,
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4
+      type: Datatypes.UUID,
+      defaultValue: Datatypes.UUIDV4
     },
     username: {
-      type: Sequelize.STRING,
+      type: Datatypes.STRING,
       allowNull: false
     },
     password: {
-      type: Sequelize.STRING,
+      type: Datatypes.STRING,
       allowNull: false
     },
+    email: {
+        type: Datatypes.STRING,
+        allowNull: false
+    },
     firstName: {
-      type: Sequelize.STRING,
+      type: Datatypes.STRING,
       allowNull: false
     },
     lastName: {
-      type: Sequelize.STRING,
+      type: Datatypes.STRING,
       allowNull: false
     },
     fullName: {
-      type: Sequelize.VIRTUAL,
+      type: Datatypes.VIRTUAL,
       get() {
         return `${this.firstName} ${this.lastName}`;
       },
@@ -30,52 +34,25 @@ module.exports = (sequelize, Sequelize) => {
         throw new Error("Do not try to set the `fullName` value!")
       }
     },
-    profPic: {
-      type: Sequelize.STRING
+    gender: {
+        type: Datatypes.STRING
+    },
+    avatar: {
+      type: Datatypes.STRING
     },
     bio: {
-      type: Sequelize.STRING
+      type: Datatypes.STRING
     },
     interests: {
-      type: Sequelize.JSON
+      type: Datatypes.JSON
     },
     likes: {
-      type: Sequelize.JSON
+      type: Datatypes.JSON
     },
     matches: {
-      type: Sequelize.JSON
+      type: Datatypes.JSON
     }
   });
-  
- // set association
-  User.associate = function ({ authToken })
-  {
-    User.hasMany(authToken)
-  }
-
-  
-  User.auth = async function(username, password) {
-    const user = await User.findOne({where: { username }});
-
-    if (bcrypt.compareSync(password, user.password)) {
-      return user.authorize();
-    }
-    else {
-      return res.status(400).json({
-        error: new Error("Wrong password!")
-      })
-    }
-
-    User.prototype.authorize = async function ()
-    {
-      const { authToken } = sequelize.models;
-      const user = this
-      const token = await authToken.generate(this.id);
-      await user.addAuthToken(token);
-      return {user, token}
-    };
-
-  }
 
   return User;
 };
