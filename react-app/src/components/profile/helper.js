@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export async function generateFeed(userID){
     var feed = []; 
     var matchingUser = await fetch("http://localhost:4000/api/users/" + userID) //get user object using userID
@@ -101,7 +102,19 @@ export async function generateFeed(userID){
     return feed;
 }
 
-export function sendLike(userID, userIDLiked){
-    const data = 
-    
+export async function sendLike(userID, userIDLiked){
+    const currUser = await fetch("http://localhost:4000/api/users/" + userID) //get user object using userID
+    .then(response => response.json())
+    .then(function(data)
+    {
+        data.likes.push(userIDLiked);
+        return data;
+    })
+    .catch(function(error)
+    {
+        console.log(error);
+        console.log("Could not retrieve user object using userID")
+    })
+    const currUserURL = "http://localhost:4000/api/users/" + userID; 
+    axios.put(currUserURL, currUser);
 }
