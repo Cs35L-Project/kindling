@@ -24,8 +24,8 @@ class App extends Component{
 function App() {
   const [state,setState] = useState({feed:[]})  //ID needs to be set by the login callback
   // Add token for user login authentication
-  //const [token, setToken] = useState({ID: 'f630a2cc-4b8a-4259-bb44-8775397feab2'});
-  const [token, setToken] = useState();
+  const [token, setToken] = useState({ID: '9c90f34a-39da-44ef-b992-dd41078c9043'});
+  //const [token, setToken] = useState();
   
   if(!token) {
     return <Login setToken={setToken} />
@@ -113,7 +113,7 @@ const Explore = props => {
   }
   const rightSwipe = () => {
     //TODO: Communicate to backend that we 'liked' this user
-    setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length))});
+    setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
   }
   const exhaustedOptions = () => {
     return (
@@ -130,8 +130,8 @@ const Explore = props => {
       </div>
       <div className="explore_profile_wrapper" style={{"textAlign":"center"}}>
         <button onClick={leftSwipe}>X</button>
-        {props.potentialsDummy.length>0 ? <Profile userID={props.potentialsDummy[state.index]} size={"full"}/> : exhaustedOptions()}
-        <button onClick={rightSwipe}>Next</button>
+        {props.potentialsDummy.length>0 ? <Profile key={state.toggle} userID={props.potentialsDummy[state.index]} size={"full"}/> : exhaustedOptions()}
+        <button onClick={rightSwipe}>Like</button>
       </div>
     </div>
   );
