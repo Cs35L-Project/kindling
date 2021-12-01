@@ -42,14 +42,12 @@ exports.findOne = (req, res) => {
 
 // Update a User by the id in the request
 exports.update = (req, res) => {
-    console.log("UPDATING USER")
     const id = req.params.id;
-    console.log(req.body)
+
     User.update(req.body, {
         where: { id: id }
     })
         .then(num => {
-            console.log("INSIDE PROMISE")
             if (num == 1) {
                 res.send({
                     message: "User was updated successfully."
@@ -66,6 +64,39 @@ exports.update = (req, res) => {
             });
         });
 };
+
+// Upload an avatar for the User
+exports.upload = (req, res) => {
+    try {
+        if (req.file == undefined) {
+            return res.send({ message: "You must select a file." })
+        }
+
+        User.update( { avatar: req.file.filename }, {
+            where: { id: req.body.id }
+        })
+            .then(num => {
+                if (num == 1) {
+                    res.send({
+                        message: "User uploaded an avatar successfully."
+                    });
+                } else {
+                    res.send({
+                        message: "Cannot update an avatar with id=${id}. Maybe User was not found or req.body is empty!"
+                    });
+                }
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: "Error uploading an avatar for User with id=" + id + "."
+                });
+            });
+
+    }  catch (error) {
+        console.log(error);
+        return res.send({ message: `Error uploading image: ${error}` });
+    }
+}
 
 // Delete a User with the specified id in the request
 exports.delete = (req, res) => {

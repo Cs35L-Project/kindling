@@ -27,7 +27,7 @@ module.exports = (sequelize, Datatypes) => {
         return `${this.firstName} ${this.lastName}`;
       },
       set(value) {
-        //throw new Error("Do not try to set the `fullName` value!")
+        throw new Error("Do not try to set the `fullName` value!")
       }
     },
     avatar: {
@@ -46,7 +46,6 @@ module.exports = (sequelize, Datatypes) => {
       type: Datatypes.JSON
     }
   });
-
 
   return User;
 };
