@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom'
 import Profile from './components/profile';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
-import { generateFeed, sendLike } from './components/profile/helper';
+import { generateFeed, sendLike, getMatches } from './components/profile/helper';
 
 /*
 class App extends Component{
@@ -143,12 +143,27 @@ const Explore = props => {
 //Clicking on an icon in this grid should bring up that user's complete profile
 //on a separate page (could be home)
 const Gallery = props => {
-  let id = props.userID; 
-  //TODO: Populate list of userID's to display to our user
-  //create list of <Profile> components to pass to <div className="container">
+  let id = props.userID;
+  //const [state,setState] = useState({matches:[],init:true});
+  const [state, setMatches] = useState();
   
-  // ### STAND IN FOR API Query  (Will want to move this whole section to parent component eventually for efficiency)
-  let matchesDummy = props.matchesDummy;
+  const setData = async () => {
+    var matches = await getMatches(id);
+    console.log(matches);
+    let data = [];
+    for (var i=0;i<matches.length;i++){
+      let routeString = "/view/"+matches[i].toString();
+      data.push(
+        <Link to={routeString}>
+        <Profile userID={matches[i]} size={"half"}/>
+        </Link>
+      );
+    }
+    if(!state) setMatches(data);
+  }
+  setData();
+  /*
+  let matchesDummy = state.matches;
   let data = [];
   for (var i=0;i<matchesDummy.length;i++){
     console.log(i);
@@ -158,9 +173,9 @@ const Gallery = props => {
       <Profile userID={matchesDummy[i]} size={"half"}/>
       </Link>
     );
-  }
+  }*/
   // these should eventually be passed to Gallery by App
-  const [matches, setMatches] = useState([data]);
+  //const [matches, setMatches] = useState([data]);
   // ### END API QUERY
   return (
     <div>
@@ -170,7 +185,7 @@ const Gallery = props => {
       </div>
       <div className="gallery_wrapper" style={{"text-align":"center"}}>
         <div className="container">
-          {matches}
+          {state}
         </div>
       </div>
     </div>
