@@ -31,7 +31,10 @@ module.exports = (sequelize, Datatypes) => {
       }
     },
     avatar: {
-      type: Datatypes.STRING
+      type: Datatypes.STRING,
+      get() {
+          return __uploadsdir + `${this.avatar}`;
+      }
     },
     bio: {
       type: Datatypes.STRING
