@@ -1,59 +1,7 @@
-const db = require("../config/db.config.js");
-const env = require('../config/env.js');
-const bcrypt = require('bcrypt');
+const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
 const { fn, col } = db.Sequelize;
-
-// Create and save a new User
-exports.create = (req, res) => {
-    console.log("USER CREATED")
-    console.log(req.body)
-    const hash = bcrypt.hashSync(req.body.password, 10) 
-    
-        // Save User in the database
-        User.create({
-            username: req.body.username,
-            password: hash,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            bio: req.body.bio,
-            interests: req.body.interests
-         })
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating User."
-            });
-        });
-      
-   
-};
-
-const { u_auth } = require('../models/user.model');
-
-// User login
-
-exports.login = async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) {
-    return res.status(400).send({
-        message:
-            err.message || "Missing username or password"
-    });
-  }
-    
-    let u_auth = await user.auth(username, password)
-    u_auth = await u_auth.authorize();
-    if (u_auth)
-        return res.json(u_auth);
-    else
-        return res.status(400).send(err);
-};
-
 
 // Retrieve all Users from the database
 exports.findAll = (req, res) => {
@@ -70,7 +18,6 @@ exports.findAll = (req, res) => {
             });
         });
 };
-
 
 // Find a single User with an id
 exports.findOne = (req, res) => {
@@ -145,7 +92,7 @@ exports.delete = (req, res) => {
         });
 };
 
-// Delete all Users from the database.
+// Delete all Users from the database
 exports.deleteAll = (req, res) => {
     User.destroy({
         where: {},

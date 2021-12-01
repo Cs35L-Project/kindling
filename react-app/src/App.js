@@ -28,7 +28,7 @@ function App() {
   //const [token, setToken] = useState();
   
   if(!token) {
-    return <Login setToken={setToken} />
+    return <Login setter={setToken} />
   }
   
   const setFeed = async () => {
