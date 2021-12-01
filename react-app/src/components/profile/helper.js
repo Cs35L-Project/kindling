@@ -32,6 +32,18 @@ export async function generateFeed(userID){
             // let t = array[i]; array[i] = array[j]; array[j] = t
             [userArray[i], userArray[j]] = [userArray[j], userArray[i]];
           }
+
+          for(let i = 0; i<matchingUser.likes.length; i++)
+          {
+              for(let j = userArray.length-1; j>=0; j--)
+              {
+                  if(matchingUser.likes[i] == userArray[j])
+                  {
+                      userArray.splice(j, 1);
+                  }
+              }
+          }
+          
         return userArray;
     })
     .catch(function(error)
