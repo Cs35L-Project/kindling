@@ -27,7 +27,7 @@ module.exports = (sequelize, Sequelize) => {
         return `${this.firstName} ${this.lastName}`;
       },
       set(value) {
-        throw new Error("Do not try to set the `fullName` value!")
+        //throw new Error("Do not try to set the `fullName` value!")
       }
     },
     profPic: {
@@ -65,7 +65,8 @@ module.exports = (sequelize, Sequelize) => {
         error: new Error("Wrong password!")
       })
     }
-  } 
+  }
+   
     User.prototype.authorize = async function ()
     {
       const { authToken } = sequelize.models;
