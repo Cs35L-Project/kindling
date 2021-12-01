@@ -37,7 +37,7 @@ export async function generateFeed(userID){
           {
               var ind = userArray.indexOf(matchingUser.likes[a]);
               if(ind != -1){
-                  userArray.splice(ind, 1);
+                 // userArray.splice(ind, 1);
               }
           }
 
