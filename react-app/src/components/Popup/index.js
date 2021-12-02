@@ -14,7 +14,19 @@ function Popup(props) {
     };
 
     const handleSubmission = () => {
-
+        if(isFilePicked){
+            const formData = new FormData();
+            formData.append(
+                "file",
+                selectedFile,
+                selectedFile.name
+              );
+              formData.append(
+                  "body",
+                  props.id
+              );
+              UserService.uploadAvatar(props.id,formData);
+        }
     };
 
     return (props.trigger) ? (
