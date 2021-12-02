@@ -2,12 +2,16 @@
     display: inline-block;
     width: 600px;
     height: 800px;
-    background: rgb(190, 181, 181);
+    background: rgb(156, 112, 54);
+    border-radius: 60px;
+    box-shadow: 11px 12px 13px 12px rgb(78, 49, 21);
   }
 
 .square {
     display: inline-block;
     width: 200px;
     height: 200px;
-    background: rgb(190, 181, 181);
+    border-radius: 60px;
+    background: rgb(156, 112, 54);
+    box-shadow: 5px 6px 7px 6px rgb(78, 49, 21);
   }
