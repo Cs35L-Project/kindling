@@ -38,7 +38,7 @@ function App() {
   
   const setFeed = async () => {
     var potentialsDummy = await generateFeed(token.ID);
-    if(state.feed.length==0){
+    if(state.feed.length==0 && potentialsDummy.length>0){
       setState({feed:potentialsDummy});
     } 
   }
