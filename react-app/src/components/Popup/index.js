@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import './index.css'
 import Creatable from 'react-select/creatable';
 import kindling_mini from "../Login/image/kindling_mini.png"
+import UserService from '../../services/user.service';
 
 function Popup(props) {
     const [selectedFile, setSelectedFile] = useState();
@@ -70,27 +71,13 @@ function Popup(props) {
                                     <input className="biography" type="text" name="text" />
                         </div>
 
-                        <div className="information">
-                            <label>Upload a photo of yourself!    </label>
-                            <form
-                                class="mt-4"
-                                action="http:/localhost:4000/api/users/:id/upload"
-                                method="POST"
-                                enctype="multipart/form-data"
-                            >
-                                <div class="form-group">
-                                    <input
-                                        type="file"
-                                        name="file"
-                                        id="input-files"
-                                        class="form-control-file border"
-                                    />
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
+                        <div className="image">
+                            <label>Upload a photo of yourself  </label>
+                            <input type="file" name="file" onChange={changeHandler} />
                         </div>
 
-                <button className="submit-button" type="submit">Save Changes</button>
+
+                <button className="submit-button" type="submit" onClick={handleSubmission}>Save Changes</button>
                 </form>
             </div>
         </div>
