@@ -110,7 +110,7 @@ const Home = props => {
       <div className="editprof">
         <button className="edit-button" onClick={() => setButtonPopup(true)}>Edit Profile</button>
       </div>
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup} id={props.userID}>
         </Popup>
     </div>
     
