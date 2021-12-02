@@ -5,6 +5,7 @@ import AuthService from './services/auth.service';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Popup from './components/Popup';
+import logo from "./components/Login/image/kindling.png"
 import { generateFeed, sendLike, getMatches } from './components/profile/helper';
 
 /*
@@ -62,8 +63,12 @@ function View(){
   return (
     <div>
       <h1 style={{"text-align":"center"}}>View User {id}'s profile</h1>
-      <div style={{"text-align":"left"}}>
-        <Link to="/view" className="view_link">Back to Matches</Link>
+      <div className="returnhome" style={{"text-align":"center"}}>
+      <a href="/view">
+          <button type="button" class="return-button">
+            Back to Matches
+          </button>
+        </a>
       </div>
       <div className="profile_wrapper" style={{"text-align":"center"}}>
         <Profile userID={id} size={"full"}/>
@@ -80,23 +85,33 @@ const Home = props => {
   }
   return (
     <div>
-      <div>
-        <h1 style={{"text-align":"center"}}>Home Page</h1>
-        <div style={{"text-align":"right"}}>
-          <button onClick={logout}>Logout</button>
-        </div>
+      <div style={{"text-align":"center"}} className="logo">
+          <img src={logo} alt="kindling" className="kindling"/>
       </div>
-      
-      <div style={{"text-align":"left"}}>
-        <Link to="/explore" className="explore_link">Explore!</Link>
-      </div>
-      <div style={{"text-align":"right"}}>
-        <Link to="/view" className="view_link">View Matches!</Link>
+      <button className="logout" onClick={logout}>Logout</button>
+    
+      <div className="homepage">
+        <div>
+          <a href="/explore">
+            <button type="button" class="explore-button">
+              Explore!
+            </button>
+          </a>
+
+          <a href="/view">
+              <button type="button" class="view-button">
+                View Matches!
+              </button>
+          </a>
       </div>
 
-      <button onClick={() => setButtonPopup(true)}>Edit</button>
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-        </Popup>
+      <div style={{"text-align":"center"}}>
+        <div className="editprof">
+          <button className="edit-button" onClick={() => setButtonPopup(true)}>Edit Profile</button>
+        </div>
+          <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+          </Popup>
+      </div>
       
       <div className="profile_wrapper" style={{"text-align":"center"}}>
         <Profile userID={props.userID} size={"full"} root={true} toggleEdit={setState}/>
@@ -130,13 +145,17 @@ const Explore = props => {
   return (               
     <div>
       <h1 style={{"textAlign":"center"}}>Explore Potential Matches!</h1>
-      <div style={{"textAlign":"left"}}>
-        <Link to="/" className="ret">Return Home</Link>
+      <div className="returnhome" style={{"textAlign":"center"}}>
+        <a href="/">
+          <button type="button" class="return-button">
+            Return Home
+          </button>
+        </a>
       </div>
       <div className="explore_profile_wrapper" style={{"textAlign":"center"}}>
-        <button onClick={leftSwipe}>X</button>
+        <button className="no-button" onClick={leftSwipe}>X</button>
         {props.potentialsDummy.length>0 ? <Profile key={state.toggle} userID={props.potentialsDummy[state.index]} size={"full"}/> : exhaustedOptions()}
-        <button onClick={rightSwipe}>Like</button>
+        <button className="yes-button" onClick={rightSwipe}>✓</button>
       </div>
     </div>
   );
@@ -170,8 +189,12 @@ const Gallery = props => {
   return (
     <div>
       <h1 style={{"text-align":"center"}}>Everyone you've matched with!</h1>
-      <div style={{"text-align":"left"}}>
-        <Link to="/" className="ret2">Return Home</Link>
+      <div className="returnhome" style={{"text-align":"center"}}>
+        <a href="/">
+          <button type="button" class="return-button">
+            Return Home
+          </button>
+        </a>
       </div>
       <div className="gallery_wrapper" style={{"text-align":"center"}}>
         <div className="container">
