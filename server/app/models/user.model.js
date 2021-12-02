@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     avatar: {
       type: DataTypes.STRING,
-      defaultValue: "",
+      defaultValue: "default.png",
       set(value) {
           this.setDataValue("avatar", __uploadsdir + value);
       }
