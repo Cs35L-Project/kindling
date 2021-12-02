@@ -94,7 +94,7 @@ exports.upload = (req, res) => {
         }
 
         User.update({ avatar: req.file.filename }, {
-            where: { id: req.body.id }
+            where: { id: req.body.body }
         })
             .then(num => {
                 if (num == 1) {
@@ -114,7 +114,6 @@ exports.upload = (req, res) => {
             });
 
     } catch (error) {
-        console.log(error);
         return res.send({ message: `Error uploading image: ${error}` });
     }
 }
