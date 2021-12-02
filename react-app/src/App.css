@@ -11,3 +11,76 @@
   height: 800px;
   background: rgb(190, 181, 181);
 }
+
+
+.logo{
+  background-color: #FFF;
+  position: absolute;
+  left: 420px;
+  top: 10px;
+  height: 115px;
+  width: 115px;
+}
+
+.homepage {
+  padding-top: 200px;
+}
+
+.no-button {
+  width: 80px;
+  height: 80px;
+  font-size: 50px;
+  position:absolute;
+  left: 100px;
+  top: 400px;
+}
+
+.yes-button {
+  width: 80px;
+  height: 80px;
+  font-size: 50px;
+  position:absolute;
+  right: 100px;
+  top: 400px;
+}
+
+.logout {
+  position:absolute;
+  right:40px;
+  top:80px;
+  width: 100px;
+  height: 50px;
+}
+
+.edit-button {
+  position: relative;
+  top: 20px;
+}
+
+.explore-button {
+  height: 50px;
+  width: 190px;
+  position: absolute;
+  left: 20px;
+}
+
+.view-button {
+  height: 50px;
+  width: 190px;
+  position: absolute;
+  right: 20px;
+}
+
+.return-button {
+  width: 230px;
+  font: 20px;
+}
+
+.returnhome {
+  padding-top: 20px;
+  padding-bottom:20px;
+}
+
+.editprof {
+  padding-bottom: 40px;
+}
