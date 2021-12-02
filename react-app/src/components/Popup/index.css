@@ -17,10 +17,54 @@
     width: 100%;
     max-width: 640px;
     background-color: #FFF;
+    border-radius: 60px;
+    box-shadow: 11px 12px 13px 12px rgb(78, 49, 21);
 }
 
 .popup-inner .close-btn {
     position: absolute;
     top: 16px;
     right: 16px;
+}
+
+.close-button {
+    width: 200px;
+    height: 25px;
+    font-size: 20px;
+    position: absolute;
+    top: 30px; left: 40px;
+}
+
+.submit-button {
+    width: 200px;
+    height: 25px;
+    font-size: 20px;
+    position: absolute;
+    top: 30px; right: 40px;
+}
+
+.kindling-image1 {
+    background-color: rgb(255, 255, 255);
+    border-radius: 200px;
+    display:flex;
+    height: 140px;
+    width: 140px;
+    position: absolute;
+    right: 50px;
+    bottom: 340px;
+}
+
+.kindling-image2 {
+    background-color: rgb(255, 255, 255);
+    border-radius: 200px;
+    display:flex;
+    height: 140px;
+    width: 140px;
+    position: absolute;
+    left: 50px;
+    bottom: 340px;
+}
+
+.information {
+    padding-top: 20px;
 }
