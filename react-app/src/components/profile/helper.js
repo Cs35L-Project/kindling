@@ -7,6 +7,8 @@ export async function generateFeed(userID){
     .then(response => response.json())
     .then(function(data)
     {
+        if(data.likes==null) data.likes = [];
+        if(data.matches==null) data.matches = [];
         return data;
     })
     .catch(function(error)
@@ -20,6 +22,8 @@ export async function generateFeed(userID){
     .then(response => response.json())
     .then(function(data)
     {
+        if(data.likes==null) data.likes = [];
+        if(data.matches==null) data.matches = [];
         var userArray = data.slice();
         //shuffle the order of users in the array
         for (let i = userArray.length - 1; i > 0; i--) {
@@ -56,6 +60,8 @@ export async function generateFeed(userID){
         .then(response => response.json())
         .then(function(data)
         {
+            if(data.likes==null) data.likes = [];
+            if(data.matches==null) data.matches = [];
             return data;
         })
         .catch(function(error)
@@ -124,6 +130,8 @@ export async function sendLike(userID, userIDLiked){
         .then(response => response.json())
         .then(function(data)
         {
+            if(data.likes==null) data.likes = [];
+            if(data.matches==null) data.matches = [];
             return data;
         })
         .catch(function(error)
@@ -136,8 +144,8 @@ export async function sendLike(userID, userIDLiked){
     .then(response => response.json())
     .then(function(data)
     {
-        if(data.likes==null) data.likes = []
-        if(data.matches==null) data.matches = []
+        if(data.likes==null) data.likes = [];
+        if(data.matches==null) data.matches = [];
         data.likes.push(userIDLiked);
         if(currUserLiked.likes!=null && currUserLiked.likes.includes(userID))
         {
@@ -163,6 +171,7 @@ export async function getMatches(userID) {
         .then(response => response.json())
         .then(function(data)
         {
+            if(data.matches==null) data.matches = [];
             return data;
         })
         .catch(function(error)
