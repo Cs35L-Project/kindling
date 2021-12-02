@@ -126,7 +126,7 @@ exports.getAvatar = (req, res) => {
     User.findByPk(id)
         .then(data => {
             if (data) {
-                data = fs.readFilesSync(data.avatar);
+                data = fs.readFileSync(data.avatar);
                 res.sendFile(data);
             } else {
                 res.status(404).send({
