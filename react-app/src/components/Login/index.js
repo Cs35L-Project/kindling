@@ -54,10 +54,7 @@ const LoginPage = props => {
                                 <input type="password" className="input-login" placeholder="Enter password"
                                  onChange={(e) => setState({...state,password:e.target.value})}/>
                             </div>
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="checkbox" id="customCheck1" />
-                                <label className="checkbox" htmlFor="customCheck1">Remember me</label>
-                            </div>
+                        
                             <div className="login-button">
                                 <button type="button" onClick={submitLogin}>Submit</button>
                             </div>
