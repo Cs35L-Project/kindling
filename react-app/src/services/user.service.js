@@ -21,6 +21,10 @@ class UserService {
         return http.post(API_URL + `/${id}/upload`, data, { headers: authHeader() });
     }
 
+    getAvatar(id) {
+        return http.get(API_URL + `/${id}/avatar`, { headers: authHeader() })
+    };
+
     searchByInterests(arrayofInterests) {
         const segment = "interests[]=";
         const length = arrayOfInterests.length;
