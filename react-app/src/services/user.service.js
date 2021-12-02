@@ -21,6 +21,11 @@ class UserService {
         return http.put(API_URL + `/${id}/upload`, data, { headers: authHeader() });
     }
 
+    getAvatar(id) {
+        return http.get(API_URL + `/${id}/avatar`, { headers: authHeader() })
+    };
+
+
 }
 
 export default new UserService();

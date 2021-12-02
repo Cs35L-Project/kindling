@@ -116,6 +116,25 @@ exports.upload = (req, res) => {
     }
 }
 
+// Get the User's avatar
+exports.getAvatar = (req, res) => {
+    const id = req.parems.id;
+
+    User.findByPk(id)
+        .then(data => {
+            if (data) {
+                res.sendFile(data.avatar);
+            } else {
+                res.status(404).send({
+                    message: `Cannot find User with id=${id}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+}
+
 // Delete a User with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
