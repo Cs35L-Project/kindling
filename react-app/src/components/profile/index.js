@@ -32,20 +32,16 @@ const Profile = props => {      //props should be a unique id corresponding to t
         initProfile()
     }
 
-    function toBinary(string) {
-        if(!string) return "";
-        const codeUnits = new Uint16Array(string.length);
-        for (let i = 0; i < codeUnits.length; i++) {
-          codeUnits[i] = string.charCodeAt(i);
-        }
-        return btoa(String.fromCharCode(new Uint8Array(codeUnits.buffer)));
+    function to64(string) {
+        if(!string) return;
+        return Buffer.from(string).toString('base64');
       }
 
     if(props.size=="full"){
         return (
             <div className="rectangle">
                 <h1>{profile.Name}</h1>
-                <img src={`data:image/jpg;base64,${btoa(encodeURIComponent(profile.Image))}`} id={profile.Name}/>
+                <img src={`data:image/jpg;base64,${to64(profile.Image)}`} id={profile.Name}/>
                 <h3>{profile.Description}</h3>
                 <h4>{profile.Interests}</h4>
             </div>
