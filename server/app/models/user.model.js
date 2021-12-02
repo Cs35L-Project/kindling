@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: "",
       set(value) {
-          return __uploadsdir + value;
+          this.setDataValue("avatar", __uploadsdir + value);
       }
     },
     bio: {
