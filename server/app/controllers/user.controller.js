@@ -44,6 +44,7 @@ exports.findOne = (req, res) => {
 
 // Update a User by the id in the request
 exports.update = (req, res) => {
+    console.log(req.body)
     const id = req.params.id;
     const username = req.body.user;
     const password = req.body.password;
@@ -51,21 +52,22 @@ exports.update = (req, res) => {
     const lastName = req.body.lastName;
     const avatar = req.body.avatar;
     const bio = req.body.bio;
-    const interests = req.body.intersts;
+    const interests = req.body.interests;
     const likes = req.body.likes;
     const matches = req.body.matches;
 
-    User.update({
-        username: username,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        avatar: avatar,
-        bio: bio,
-        interests: interests,
-        likes: likes,
-        matches: matches
-    }, {
+    const form = {};
+    if(username) form.username = username;
+    if(password) form.password = password;
+    if(firstName) form.firstName = firstName;
+    if(lastName) form.lastName = lastName;
+    if(avatar) form.avatar = avatar;
+    if(bio) form.bio = bio;
+    if(interests) form.interests = interests;
+    if(likes) form.likes = likes;
+    if(matches) form.matches = matches;
+
+    User.update(form, {
         where: { id: id }
     })
         .then(num => {
