@@ -2,6 +2,7 @@ import "axios";
 import './style.css'
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import UserService from '../../services/user.service';
 
 const Profile = props => {      //props should be a unique id corresponding to the user
     //const [profile, setProfile] = useState();
@@ -11,32 +12,40 @@ const Profile = props => {      //props should be a unique id corresponding to t
         Description: null, 
         Interests: null,
         UID: props.userID,
+        Image: null,
         init:true});
     
-    // Below promise will only be functional once backend is serving data
-    if(profile.init){
-        axios.get(`http://localhost:4000/api/users/${props.userID}`)
-        .then((res) => {
-            var response = res.data;
-            let data = {
-                Name: response.fullName, 
-                Description: response.bio, 
-                Interests: response.interests,
-                UID: props.userID, 
-            };
-            setProfile(data);
-        })
-        .catch((e) => {
-            console.log(e);
-            console.log("cannot connect to server");
-        })
+    const initProfile = async () => {
+       let res = await axios.get(`http://localhost:4000/api/users/${props.userID}`);
+       let image = await UserService.getAvatar(props.userID).catch((err) => { console.error(err); });
+       var response = res.data;
+       let data = {
+            Name: response.fullName, 
+            Description: response.bio, 
+            Interests: response.interests,
+            UID: props.userID, 
+            Image: image ? image.data:null,
+        };
+        setProfile(data);
     }
+    if(profile.init){
+        initProfile()
+    }
+
+    function toBinary(string) {
+        if(!string) return "";
+        const codeUnits = new Uint16Array(string.length);
+        for (let i = 0; i < codeUnits.length; i++) {
+          codeUnits[i] = string.charCodeAt(i);
+        }
+        return btoa(String.fromCharCode(new Uint8Array(codeUnits.buffer)));
+      }
 
     if(props.size=="full"){
         return (
             <div className="rectangle">
                 <h1>{profile.Name}</h1>
-                <h2>PICTURE</h2>
+                <img src={`data:image/jpg;base64,${btoa(encodeURIComponent(profile.Image))}`} id={profile.Name}/>
                 <h3>{profile.Description}</h3>
                 <h4>{profile.Interests}</h4>
                 <h5>USER ID: {props.userID}</h5>
