@@ -7,6 +7,9 @@ import UserService from '../../services/user.service';
 function Popup(props) {
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
+    const [state, setState] = useState({
+        selectedInterests: [],
+    })
     
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -27,6 +30,17 @@ function Popup(props) {
               );
               UserService.uploadAvatar(props.id,formData);
         }
+        var request = require('request');    
+        request.put({url:`http://localhost:4000/api/users/${props.id}`, 
+        form: {
+            username: state.username,
+            password: state.password,
+            firstName: state.firstName,
+            lastName: state.lastName,
+            interests: state.selectedInterests,
+            bio: state.bio
+        }
+        });
     };
 
     return (props.trigger) ? (
@@ -53,34 +67,30 @@ function Popup(props) {
 
                         <div className="information">
                             <label>Email Address   </label>
-                            <input type="email" className="input-signup" placeholder="Update email" />
+                            <input type="email" className="input-signup" placeholder="Update email" 
+                            onChange={(e) => setState({...state,username:e.target.value})}/>
                         </div>
 
                         <div className="information">
                             <label>Password   </label>
-                            <input type="password" className="input-signup" placeholder="Update password" />
+                            <input type="password" className="input-signup" placeholder="Update password" 
+                            onChange={(e) => setState({...state,password:e.target.value})}/>
                         </div>
 
                         <div className="information">
-                            <label>What is your gender?</label>
-                                <Creatable options={gender}
-                                    onChange={opt => console.log(opt.label, opt.value)}
-                                />
                              <label>What are your interests?</label>
                                 <Creatable options={interests}
                                     isMulti
-                                    onChange={(opt, meta) => console.log(opt, meta)}
+                                    onChange={(opt, meta) => setState({...state,selectedInterests:opt})}
                                 />
-                            <label>What is your personality type?</label>
-                                <Creatable options={personality}
-                                    onChange={opt => console.log(opt.label, opt.value)}
-                                />
+                            
 
                         </div>
 
                         <div className="information">
                                 <label> Insert your bio:  </label>
-                                    <input className="biography" type="text" name="text" />
+                                    <input className="biography" type="text" name="text" 
+                                    onChange={(e) => setState({...state,bio:e.target.value})}/>
                         </div>
 
                         <div className="image">
