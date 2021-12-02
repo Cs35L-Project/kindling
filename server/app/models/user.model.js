@@ -32,22 +32,26 @@ module.exports = (sequelize, DataTypes) => {
     },
     avatar: {
       type: DataTypes.STRING,
-      get() {
-          avatarFile = this.getDataValue("avatar");
-          return __uploadsdir + avatarFile;
+      defaultValue: "",
+      set(value) {
+          return __uploadsdir + value;
       }
     },
     bio: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: ""
     },
     interests: {
-      type: DataTypes.JSON
+      type: DataTypes.JSON,
+      defaultValue: []
     },
     likes: {
-      type: DataTypes.JSON
+      type: DataTypes.JSON,
+      defaultValue: []
     },
     matches: {
-      type: DataTypes.JSON
+      type: DataTypes.JSON,
+      defaultValue: []
     }
   });
 

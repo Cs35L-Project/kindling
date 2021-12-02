@@ -43,8 +43,27 @@ exports.findOne = (req, res) => {
 // Update a User by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
+    const username = req.body.user;
+    const password = req.body.password;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const avatar = req.body.avatar;
+    const bio = req.body.bio;
+    const interests = req.body.intersts;
+    const likes = req.body.likes;
+    const matches = req.body.matches;
 
-    User.update(req.body, {
+    User.update({
+        username: username,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        avatar: avatar,
+        bio: bio,
+        interests: interests,
+        likes: likes,
+        matches: matches
+    }, {
         where: { id: id }
     })
         .then(num => {
@@ -72,7 +91,7 @@ exports.upload = (req, res) => {
             return res.send({ message: "You must select a file." })
         }
 
-        User.update( { avatar: req.file.filename }, {
+        User.update({ avatar: req.file.filename }, {
             where: { id: req.body.id }
         })
             .then(num => {
@@ -92,7 +111,7 @@ exports.upload = (req, res) => {
                 });
             });
 
-    }  catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({ message: `Error uploading image: ${error}` });
     }
