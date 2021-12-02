@@ -10,15 +10,15 @@ class UserService {
     }
 
     getUser(id) {
-        return http.get(API_URL + "/${id}", { headers: authHeader() });
+        return http.get(API_URL + `/${id}`, { headers: authHeader() });
     }
 
     updateUser(id) {
-        return http.put(API_URL + "/${id}", { headers: authHeader() });
+        return http.put(API_URL + `/${id}`, { headers: authHeader() });
     }
 
     uploadAvatar(id, data) {
-        return http.post(API_URL + "/${id}/upload", data, { headers: authHeader() });
+        return http.post(API_URL + `/${id}/upload`, data, { headers: authHeader() });
     }
 
     searchByInterests(arrayofInterests) {
