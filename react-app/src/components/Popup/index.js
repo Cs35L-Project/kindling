@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import './index.css'
 import Creatable from 'react-select/creatable';
+import kindling_mini from "../Login/image/kindling_mini.png"
 
 function Popup(props) {
     const [selectedFile, setSelectedFile] = useState();
