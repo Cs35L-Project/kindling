@@ -39,6 +39,9 @@ module.exports = app => {
     // Upload an avatar for User with id
     router.put("/:id/upload", upload.single("file"), controller.upload);
 
+    // Get the User's avatar
+    router.get("/:id/avatar", controller.getAvatar);
+
     // // Delete a User with id
     // router.delete("/:id", controller.delete);
 
