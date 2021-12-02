@@ -18,8 +18,14 @@ function Popup(props) {
     return (props.trigger) ? (
         <div className="popup">
             <div className="popup-inner">
-                <button className="close-btn" onClick={() => props.setTrigger(false)}>close</button>
+                <button className="close-button" onClick={() => props.setTrigger(false)}>Close</button>
                 <h2 style={{"text-align":"center"}}>Edit Your Profile </h2>
+                <div className="kindling-image1">
+                            <img src={kindling_mini} alt="kindling" className="kindling"/>
+                </div>
+                <div className="kindling-image2">
+                            <img src={kindling_mini} alt="kindling" className="kindling"/>
+                </div>
                 <form>
                         <div className="information">
                             <label>First Name   </label>
@@ -58,15 +64,13 @@ function Popup(props) {
 
                         </div>
 
-                        <div className="bio">
-                                <label>
-                                    Bio:
+                        <div className="information">
+                                <label> Insert your bio:  </label>
                                     <input className="biography" type="text" name="text" />
-                                </label>
                         </div>
 
-                        <div className="image">
-                            <label>Upload a photo of yourself  </label>
+                        <div className="information">
+                            <label>Upload a photo of yourself!    </label>
                             <form
                                 class="mt-4"
                                 action="http:/localhost:4000/api/users/:id/upload"
@@ -85,7 +89,7 @@ function Popup(props) {
                             </form>
                         </div>
 
-                <button type="submit">Submit</button>
+                <button className="submit-button" type="submit">Save Changes</button>
                 </form>
             </div>
         </div>
