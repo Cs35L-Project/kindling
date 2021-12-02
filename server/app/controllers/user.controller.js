@@ -120,13 +120,13 @@ exports.upload = (req, res) => {
 
 // Get the User's avatar
 exports.getAvatar = (req, res) => {
-    const id = req.parems.id;
+    const id = req.params.id;
 
     User.findByPk(id)
         .then(data => {
             if (data) {
                 data = fs.readFileSync(data.avatar);
-                res.sendFile(data);
+                res.send(data);
             } else {
                 res.status(404).send({
                     message: `Cannot find User with id=${id}.`
