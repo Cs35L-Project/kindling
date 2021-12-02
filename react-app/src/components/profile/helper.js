@@ -71,11 +71,11 @@ export async function generateFeed(userID){
         })
 
         if(matchingUser.likes.indexOf(currUser.id) != -1){
-            a++;
+            var ind = availUsers.indexOf(currUser.id);
+            availUsers.splice(ind, 1);
             continue;
         }
-
-        if(currUser.likes != null && currUser.likes.includes(userID))
+        else if(currUser.likes != null && currUser.likes.includes(userID))
         {            
             //add to feed
             feed.unshift(currUser.id);
@@ -90,7 +90,12 @@ export async function generateFeed(userID){
     while(feed.length < 10 && i < availUsers.length && userInterests !=null)
     {   
         const currUserID = availUsers[i].id; //get userID of current user
-        if(userID == currUserID || feed.includes(currUserID) || (matchingUser.likes.indexOf(currUser.id) != -1)) //skip if user matched with itself or currUser is already in list or if already liked
+        if(matchingUser.likes.indexOf(currUserID) != -1){
+            var ind = availUsers.indexOf(currUserID);
+            availUsers.splice(ind, 1);
+            continue;
+        }
+        if(userID == currUserID || feed.includes(currUserID)) //skip if user matched with itself or currUser is already in list or if already liked
         {
             i++;
             continue;
@@ -113,7 +118,12 @@ export async function generateFeed(userID){
     while(feed.length < 10 && c < availUsers.length)
     {
         const currUserID = availUsers[c].id;
-        if(userID == currUserID || feed.includes(currUserID) || (matchingUser.likes.indexOf(currUser.id) != -1)) //skip if user matched with itself or currUser is already in list
+        if(matchingUser.likes.indexOf(currUserID) != -1){
+            var ind = availUsers.indexOf(currUserID);
+            availUsers.splice(ind, 1);
+            continue;
+        }
+        if(userID == currUserID || feed.includes(currUserID)) //skip if user matched with itself or currUser is already in list
         {
             c++;
             continue;
