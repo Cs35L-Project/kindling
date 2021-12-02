@@ -22,7 +22,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
        let data = {
             Name: response.fullName, 
             Description: response.bio, 
-            Interests: response.interests,
+            Interests: response.interests.join(' '),
             UID: props.userID, 
             Image: image ? image.data:null,
         };
@@ -48,7 +48,6 @@ const Profile = props => {      //props should be a unique id corresponding to t
                 <img src={`data:image/jpg;base64,${btoa(encodeURIComponent(profile.Image))}`} id={profile.Name}/>
                 <h3>{profile.Description}</h3>
                 <h4>{profile.Interests}</h4>
-                <h5>USER ID: {props.userID}</h5>
             </div>
             );
     }
@@ -56,8 +55,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
         return (
             <div className="square">
                 <h1>{profile.Name}</h1>
-                <h2>PICTURE</h2>
-                <h3>USER ID: {props.userID}</h3>
+                <img src={`data:image/jpg;base64,${btoa(encodeURIComponent(profile.Image))}`} id={profile.Name}/>
             </div>
         );
     }
