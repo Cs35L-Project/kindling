@@ -30,16 +30,24 @@ function Popup(props) {
               );
               UserService.uploadAvatar(props.id,formData);
         }
-        var request = require('request');    
+        var request = require('request');  
+        let form = {};
+        console.log(state)
+        var bcrypt = require("bcryptjs");
+        if(state.username) form.username = state.username;  
+        if(state.password) form.password = bcrypt.hashSync(state.password, 10);  
+        if(state.firstName) form.firstName = state.firstName;
+        if(state.lastName) form.lastName = state.lastName;  
+        if(state.selectedInterests){
+            const interests = [];
+            for(var i=0;i<state.selectedInterests.length;i++) interests.push(state.selectedInterests[i]['label'])
+            form.interests = interests;
+            console.log(interests) 
+        }  
+        if(state.bio) form.bio = state.bio;
+
         request.put({url:`http://localhost:4000/api/users/${props.id}`, 
-        form: {
-            username: state.username,
-            password: state.password,
-            firstName: state.firstName,
-            lastName: state.lastName,
-            interests: state.selectedInterests,
-            bio: state.bio
-        }
+        form: form
         });
     };
 
