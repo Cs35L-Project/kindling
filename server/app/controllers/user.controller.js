@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
@@ -124,7 +126,8 @@ exports.getAvatar = (req, res) => {
     User.findByPk(id)
         .then(data => {
             if (data) {
-                res.sendFile(data.avatar);
+                data = fs.readFilesSync(data.avatar);
+                res.sendFile(data);
             } else {
                 res.status(404).send({
                     message: `Cannot find User with id=${id}.`
