@@ -84,39 +84,40 @@ const Home = props => {
     props.setter(null);
   }
   return (
-    <div>
-      <div style={{"text-align":"center"}} className="logo">
-          <img src={logo} alt="kindling" className="kindling"/>
-      </div>
-      <button className="logout" onClick={logout}>Logout</button>
     
-      <div className="homepage">
-        <div>
-          <a href="/explore">
-            <button type="button" class="explore-button">
-              Explore!
-            </button>
-          </a>
-
-          <a href="/view">
-              <button type="button" class="view-button">
-                View Matches!
-              </button>
-          </a>
-      </div>
-
-      <div style={{"text-align":"center"}}>
-        <div className="editprof">
-          <button className="edit-button" onClick={() => setButtonPopup(true)}>Edit Profile</button>
-        </div>
-          <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          </Popup>
-      </div>
-      
-      <div className="profile_wrapper" style={{"text-align":"center"}}>
-        <Profile userID={props.userID} size={"full"} root={true} toggleEdit={setState}/>
-      </div>
+    <div>
+    <div style={{"text-align":"center"}} className="logo">
+        <img src={logo} alt="kindling" className="kindling"/>
     </div>
+    <button className="logout" onClick={logout}>Logout</button>
+  
+    <div className="homepage">
+      
+        <a href="/explore">
+          <button type="button" class="explore-button">
+            Explore!
+          </button>
+        </a>
+
+        <a href="/view">
+            <button type="button" class="view-button">
+              View Matches!
+            </button>
+        </a>
+    </div>
+
+    <div style={{"text-align":"center"}}>
+      <div className="editprof">
+        <button className="edit-button" onClick={() => setButtonPopup(true)}>Edit Profile</button>
+      </div>
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        </Popup>
+    </div>
+    
+    <div className="profile_wrapper" style={{"text-align":"center"}}>
+      <Profile userID={props.userID} size={"full"} root={true} toggleEdit={setState}/>
+    </div>
+  </div>
   );
 }
 
