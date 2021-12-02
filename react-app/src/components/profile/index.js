@@ -45,7 +45,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
     }
     else{
         return (
-            <div className="square-profile">
+            <div className="square">
                 <h1>{profile.Name}</h1>
                 <h2>PICTURE</h2>
                 <h3>USER ID: {props.userID}</h3>
