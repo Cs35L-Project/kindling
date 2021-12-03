@@ -22,7 +22,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
        let data = {
             Name: response.fullName, 
             Description: response.bio, 
-            Interests: response.interests.join(' '),
+            Interests: response.interests ? response.interests.join(' ') : [],
             UID: props.userID, 
             Image: image ? image.data:null,
         };
