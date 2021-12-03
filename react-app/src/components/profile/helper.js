@@ -92,7 +92,7 @@ export async function generateFeed(userID){
             continue;
         }
         const currUserInterests = availUsers[i].interests //list of user interests
-        if(currUserInterests != null){
+        if(currUserInterests != null && userInterests !=null){
             //make array of matching interests
             const filteredStrArray = userInterests.filter(value => currUserInterests.includes(value)).filter((value, index, self) => self.indexOf(value) === index);
             if(!filteredStrArray && filteredStrArray.length > 2)
