@@ -15,3 +15,9 @@
     background: rgb(156, 112, 54);
     box-shadow: 5px 6px 7px 6px rgb(78, 49, 21);
   }
+
+.img {
+    max-width: 100%;
+    max-height: 50%;
+    width: auto\9; /* ie8 */
+}

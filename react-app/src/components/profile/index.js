@@ -34,14 +34,15 @@ const Profile = props => {      //props should be a unique id corresponding to t
 
     function to64(string) {
         if(!string) return;
-        return Buffer.from(string).toString('base64');
+        return new Buffer(string, 'binary').toString('base64');
+        //return Buffer.from(string).toString('base64');
       }
 
     if(props.size=="full"){
         return (
             <div className="rectangle">
                 <h1>{profile.Name}</h1>
-                <img src={`data:image/jpg;base64,${to64(profile.Image)}`} id={profile.Name}/>
+                <img class="img" src={`http://localhost:4000/api/users/${props.userID}/avatar/`} id={profile.Name}/>
                 <h3>{profile.Description}</h3>
                 <h4>{profile.Interests}</h4>
             </div>
@@ -51,7 +52,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
         return (
             <div className="square">
                 <h1>{profile.Name}</h1>
-                <img src={`data:image/jpg;base64,${btoa(encodeURIComponent(profile.Image))}`} id={profile.Name}/>
+                <img class="img" src={`http://localhost:4000/api/users/${props.userID}/avatar/`} id={profile.Name}/>
             </div>
         );
     }

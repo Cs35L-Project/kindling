@@ -127,8 +127,9 @@ exports.getAvatar = (req, res) => {
     User.findByPk(id)
         .then(data => {
             if (data) {
-                data = fs.readFileSync(data.avatar);
-                res.send(data);
+                //data = fs.readFileSync(data.avatar);
+                //console.log(data)
+                res.sendFile(data.avatar);
             } else {
                 res.status(404).send({
                     message: `Cannot find User with id=${id}.`
