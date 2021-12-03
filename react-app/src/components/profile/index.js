@@ -6,15 +6,15 @@ import UserService from '../../services/user.service';
 
 const Profile = props => {      //props should be a unique id corresponding to the user
     //const [profile, setProfile] = useState();
-    
     const [profile, setProfile] = useState({
         Name: null, 
         Description: null, 
         Interests: null,
-        UID: props.userID,
+        UID: null,
         Image: null,
         init:true});
-    
+    console.log("STATE OF CURRENT DISPLAY")
+    console.log(profile)
     const initProfile = async () => {
        let res = await axios.get(`http://localhost:4000/api/users/${props.userID}`);
        let image = await UserService.getAvatar(props.userID).catch((err) => { console.error(err); });
@@ -24,7 +24,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
             Description: response.bio, 
             Interests: response.interests ? response.interests.join(' ') : [],
             UID: props.userID, 
-            Image: image ? image.data:null,
+//            Image: image ? image.data:null,
         };
         setProfile(data);
     }
@@ -42,7 +42,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
         return (
             <div className="rectangle">
                 <h1>{profile.Name}</h1>
-                <img class="img" src={`http://localhost:4000/api/users/${props.userID}/avatar/`} id={profile.Name}/>
+                <img class="img" src={`http://localhost:4000/api/users/${profile.UID}/avatar/`} id={profile.Name}/>
                 <h3>{profile.Description}</h3>
                 <h4>{profile.Interests}</h4>
             </div>
@@ -52,7 +52,7 @@ const Profile = props => {      //props should be a unique id corresponding to t
         return (
             <div className="square">
                 <h1>{profile.Name}</h1>
-                <img class="img" src={`http://localhost:4000/api/users/${props.userID}/avatar/`} id={profile.Name}/>
+                <img class="img" src={`http://localhost:4000/api/users/${profile.UID}/avatar/`} id={profile.Name}/>
             </div>
         );
     }
