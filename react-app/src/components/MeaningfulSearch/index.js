@@ -25,7 +25,7 @@ function MeaningfulSearch(props) {
             let newFeed = await queryFeed(interests);
             console.log("NEW FEED")
             console.log(newFeed);
-            props.setter({feed:newFeed}); 
+            props.setter({feed:newFeed,filtered:true}); 
         }  
         
     };
