@@ -136,7 +136,7 @@ const Explore = props => {
     setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
   }
   const rightSwipe = () => {
-    sendLike(id,props.potentialsDummy[state.index]);
+    if(state.index) sendLike(id,props.potentialsDummy[state.index]);
     props.potentialsDummy.splice(state.index,1); //Delete that user from their list
     setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
   }
