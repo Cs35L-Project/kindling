@@ -8,7 +8,6 @@ import { queryFeed } from '../profile/helper';
 
 
 function MeaningfulSearch(props) {
-    console.log("INIT")
     const [state, setState] = useState({
         query: [],
     })
