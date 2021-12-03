@@ -57,6 +57,14 @@
   top: 20px;
 }
 
+.query-button {
+  position:absolute;
+  right:1600px;
+  top:80px;
+  width: 100px;
+  height: 50px;
+}
+
 .explore-button {
   height: 50px;
   width: 190px;
