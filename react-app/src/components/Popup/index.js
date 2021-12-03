@@ -65,12 +65,14 @@ function Popup(props) {
                 <form>
                         <div className="information">
                             <label>First Name   </label>
-                            <input type="text" className="input-signup" placeholder="Update first name"/>
+                            <input type="text" className="input-signup" placeholder="Update first name"
+                            onChange={(e) => setState({...state,firstName:e.target.value})} />
                         </div>
 
                         <div className="information">
                             <label>Last Name   </label>
-                            <input type="text" className="input-signup" placeholder="Update last name" />
+                            <input type="text" className="input-signup" placeholder="Update last name"
+                            onChange={(e) => setState({...state,lastName:e.target.value})} />
                         </div>
 
                         <div className="information">
