@@ -5,6 +5,7 @@ import AuthService from './services/auth.service';
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Popup from './components/Popup';
+import  MeaningfulSearch  from './components/MeaningfulSearch';
 import logo from "./components/Login/image/kindling.png"
 import { generateFeed, sendLike, getMatches } from './components/profile/helper';
 
@@ -36,7 +37,8 @@ function App() {
     }
     return <Login setter={setToken} />
   }
-  
+  console.log("CURRENT FEED")
+  console.log(state.feed)
   const setFeed = async () => {
     var potentialsDummy = await generateFeed(token.ID);
     if(state.feed.length==0 && potentialsDummy.length>0){
@@ -50,7 +52,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home userID={token.ID} setter={setToken}/>} />
-        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={state.feed}/>} />
+        <Route path="/explore" element={<Explore userID={token.ID} potentialsDummy={state.feed} setter={setState}/>} />
         <Route path="/view" element={<Gallery userID={token.ID} matchesDummy={matchesDummy}/>} />
         <Route path="/view/:id" element={<View/>} />
       </Routes>
@@ -112,6 +114,7 @@ const Home = props => {
       </div>
         <Popup trigger={buttonPopup} setTrigger={setButtonPopup} id={props.userID}>
         </Popup>
+        
     </div>
     
     <div className="profile_wrapper" style={{"text-align":"center"}}>
@@ -127,6 +130,7 @@ const Home = props => {
 const Explore = props => {
   let id = props.userID; 
   const [state,setState] = useState({index:parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),toggle:false});
+  const [buttonPopup, setButtonPopup] = useState(false)
   const leftSwipe = () => {
     props.potentialsDummy.splice(state.index,1); //Delete that user from their list
     setState({'index':parseInt(Math.floor(Math.random() * props.potentialsDummy.length)),'toggle':!state.toggle});
@@ -151,7 +155,14 @@ const Explore = props => {
           <button type="button" class="return-button">
             Return Home
           </button>
+          <div style={{"text-align":"center"}}>      
+    </div>
         </a>
+        <div className="query">
+        <button className="query-button" onClick={() => setButtonPopup(true)}>Query</button>
+        <MeaningfulSearch trigger={buttonPopup} setTrigger={setButtonPopup} id={props.userID} setter={props.setter}>
+        </MeaningfulSearch>
+      </div>
       </div>
       <div className="explore_profile_wrapper" style={{"textAlign":"center"}}>
         <button className="no-button" onClick={leftSwipe}>X</button>

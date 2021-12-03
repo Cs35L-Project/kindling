@@ -3,6 +3,7 @@ import './index.css'
 import Creatable from 'react-select/creatable';
 import kindling_mini from "../Login/image/kindling_mini.png"
 import UserService from '../../services/user.service';
+import { queryFeed } from '../profile/helper';
 
 function Popup(props) {
     const [selectedFile, setSelectedFile] = useState();
@@ -115,6 +116,48 @@ function Popup(props) {
         </div>
     ) : "";
 }
+
+// function MeaningfulSearch(props) {
+//     console.log("INIT")
+//     const [state, setState] = useState({
+//         query: [],
+//     })
+    
+//     const handleSubmission = () => {
+//         console.log("SUBMITTED")
+//         var request = require('request');  
+//         let form = {};
+//         if(state.query){
+//             const interests = [];
+//             for(var i=0;i<state.selectedInterests.length;i++) interests.push(state.selectedInterests[i]['label'])
+//             form.interests = interests;
+//             console.log(interests) 
+//         }  
+        
+//     };
+
+//     return (props.trigger) ? (
+//         <div className="popup">
+//             <div className="popup-inner">
+                
+//                 <h2 style={{"text-align":"center"}}>Search by Interest </h2>
+                
+//                 <form>
+//                         <div className="information">
+//                              <label>Who do you want to search for?</label>
+//                                 <Creatable options={interests}
+//                                     isMulti
+//                                     onChange={(opt, meta) => setState({query:opt})}
+//                                 />
+                            
+
+//                         </div>
+//                 <button className="submit-button" type="button" onClick={handleSubmission}>Save Changes</button>
+//                 </form>
+//             </div>
+//         </div>
+//     ) : "";
+// }
 
 const gender = [
     {label: "Male", value: 1},

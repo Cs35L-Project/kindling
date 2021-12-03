@@ -36,15 +36,6 @@ export async function generateFeed(userID){
             // let t = array[i]; array[i] = array[j]; array[j] = t
             [userArray[i], userArray[j]] = [userArray[j], userArray[i]];
           }
-          /*
-          for(let a = 0; a<matchingUser.likes.length; a++)
-          {
-              var ind = userArray.indexOf(matchingUser.likes[a]);
-              if(ind != -1){
-                  userArray.splice(ind, 1);
-              }
-          }
-          */
         return userArray;
     })
     .catch(function(error)
@@ -190,4 +181,47 @@ export async function getMatches(userID) {
             console.log("Could not retrieve user object using userID")
         });
     return user.matches;
+}
+
+
+
+
+export async function queryFeed(interests){
+    const feedAll = await fetch("http://localhost:4000/api/users/")
+    .then(response => response.json())
+    .then(function(data)
+    {
+        if(data.likes==null) data.likes = [];
+        if(data.matches==null) data.matches = [];
+        var userArray = data.slice();
+        //shuffle the order of users in the array
+        for (let i = userArray.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+        
+            // swap elements array[i] and array[j]
+            // we use "destructuring assignment" syntax to achieve that
+            // you'll find more details about that syntax in later chapters
+            // same can be written as:
+            // let t = array[i]; array[i] = array[j]; array[j] = t
+            [userArray[i], userArray[j]] = [userArray[j], userArray[i]];
+          }
+        return userArray;
+    })
+    .catch(function(error)
+    {
+        console.log(error);
+        console.log("Could not get list of all users")
+    })
+
+    const queryResult = [];
+    for(let i=0;i<feedAll.length;i++){
+        let flag = true;
+        for(let k=0;k<interests.length && flag;k++){
+            if(!feedAll[i].interests.includes(interests[k])) flag = false;
+        }
+        if(flag){
+            queryResult.push(feedAll[i].id);
+        }
+    }
+    return queryResult;
 }
